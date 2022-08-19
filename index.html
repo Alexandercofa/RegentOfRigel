@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Regent of Rigel</title>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="script/gameLogic.js"></script>
+    </head>
+    <body>
+        <rigel-game>
+            <rigel-global-settings max-planet-size="300" >
+            </rigel-global-settings>
+            <rigel-races>
+                <race raceID="0" raceName="guardian" color="">
+                    <ship-spec type="0" name="Guardian" computer="10" shield="10" ecm="10" armour="10" engine="10" maneuver="4" weapons="0 0 0" specials="0 0"></ship-spec>
+                </race>
+            </rigel-races>
+            <rigel-fleets>
+                <fleet fleetID="0" owner="guardian"><ship type="0" count="1"></ship></fleet>
+                <fleet fleetID="1" owner=""><ship type="0" count="20"></ship></fleet>
+            </rigel-fleets>
+            <rigel-starfield>
+                <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20">
+                </rigel-starsystem>
+                <rigel-starsystem class='selected' x="3" y="2" name="Test1" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="100 20 20 20 20">
+                </rigel-starsystem>
+                <rigel-starsystem x="2" y="1" name="Test2" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                </rigel-starsystem>
+                <rigel-starsystem x="7" y="5" name="Test3" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                </rigel-starsystem>
+                <rigel-starsystem x="9" y="3" name="Test4" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                </rigel-starsystem>
+            </rigel-starfield>
+            <div class="planet-details">
+                <div class="toggle-details" onclick="togglePlanetDetails()">
+                    <div class="toggle-details-symbol"></div>
+                </div>
+                <h1 class="planet-name">Rigel</h1>
+                <div class="planet-summary">
+                    <img class="image">
+                    <div class="habitability">gaia</div>
+                    <div class="resource-level">rigel</div>
+                    <div class="max-population">250</div>
+                </div>
+                <div class="planet-resources">
+                    <div class="population"><label>Population: <b>10m</b></label></div><div class="missile-bases"><label>Bases: <b>10</b></label></div>
+                    <div class="production">
+                        <div class="ship"><label><icon class="unlocked"></icon>Ship</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                        <div class="defense"><label><icon class="unlocked"></icon>Def.</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                        <div class="industry"><label><icon class="unlocked"></icon>Ind.</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                        <div class="ecology"><label><icon class="unlocked"></icon>Eco.</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                        <div class="technology"><label><icon class="unlocked"></icon>Tech</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                </div>
+                </div>
+            </div>
+            <!-- <rigel-battlefield planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
+                <ship-display x="0" y="0" owner="human" type="0" health="10" size="behemoth" count="10"></ship-display>
+            </rigel-battlefield> -->
+        </rigel-game>
+    </body>
+</html>
