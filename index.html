@@ -13,13 +13,18 @@
             <rigel-global-settings max-planet-size="300" >
             </rigel-global-settings>
             <rigel-races>
-                <race raceID="0" raceName="guardian" color="">
-                    <ship-spec type="0" name="Guardian" computer="10" shield="10" ecm="10" armour="10" engine="10" maneuver="4" weapons="0 0 0" specials="0 0"></ship-spec>
+                <race raceID="0" raceName="guardian">
+                    <ship-spec shipID="0" name="Guardian" size="behemoth" shape="guardian" computer="10" shield="10" ecm="10" armour="10" engine="10" maneuvre="4" weapons="0 0 0" specials="0 0"></ship-spec>
+                </race>
+                <race raceID="1" raceName="human" class="player">
+                    <ship-spec shipID="0" name="Colony Ship" size="cruiser" shape="shape1" computer="0" shield="0" ecm="0" armour="0" engine="1" maneuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
+                    <ship-spec shipID="1" name="TechnoSploder" size="cruiser" shape="shape2" computer="0" shield="0" ecm="0" armour="0" engine="1" maneuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
+                    <ship-spec shipID="2" name="Exploderiser" size="cruiser" shape="shape3" computer="0" shield="0" ecm="0" armour="0" engine="1" maneuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
                 </race>
             </rigel-races>
             <rigel-fleets>
                 <fleet fleetID="0" owner="guardian"><ship type="0" count="1"></ship></fleet>
-                <fleet fleetID="1" owner=""><ship type="0" count="20"></ship></fleet>
+                <fleet fleetID="1" owner="humans"><ship type="0" count="20"></ship></fleet>
             </rigel-fleets>
             <rigel-starfield>
                 <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20">
@@ -40,24 +45,47 @@
                 <h1 class="planet-name">Rigel</h1>
                 <div class="planet-summary">
                     <img class="image">
-                    <div class="habitability">gaia</div>
-                    <div class="resource-level">rigel</div>
-                    <div class="max-population">250</div>
+                    <label class="line1">Habitability:<b class="resource habitability">gaia</b></label>
+                    <label class="line2">Resources:<b class="resource resource-level">rigel</b></label>
+                    <label class="line3">Max Pop:<b class="resource max-population">250</b></label>
                 </div>
                 <div class="planet-resources">
-                    <div class="population"><label>Population: <b>10m</b></label></div><div class="missile-bases"><label>Bases: <b>10</b></label></div>
-                    <div class="production">
+                    <div class="population"><label>Population: <b class="population-value">10</b></label></div><div class="missile-bases"><label>Bases: <b class="missile-bases-value">10</b></label></div>
+                    <div class="production"> <label>Production: <b class="production-value">100</b></label>
                         <div class="ship"><label><icon class="unlocked"></icon>Ship</label><input type="range" min="0" max="100" value="20" step="5"></div>
                         <div class="defense"><label><icon class="unlocked"></icon>Def.</label><input type="range" min="0" max="100" value="20" step="5"></div>
                         <div class="industry"><label><icon class="unlocked"></icon>Ind.</label><input type="range" min="0" max="100" value="20" step="5"></div>
                         <div class="ecology"><label><icon class="unlocked"></icon>Eco.</label><input type="range" min="0" max="100" value="20" step="5"></div>
                         <div class="technology"><label><icon class="unlocked"></icon>Tech</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                    </div>
+                
+                    </div>
+                    <div class="planet-actions">
+                        <ship-selection index="0" count="0" shipsPerDay="0.1">
+                            <ship-carousel focus="0">
+                                
+                            </ship-carousel>
+                        </ship-selection>
+                        <div class="buttons">
+                            <button class="ship-design">Ships</button>
+                            <button class="relocation">Relocate</button>
+                            <button class="transport">Transport</button>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-            <!-- <rigel-battlefield planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
+            <button-bar>
+                <input type="button" class="menu-button" value="Menu">
+                <input type="button" class="design-button" value="Design">
+                <input type="button" class="fleet-button" value="Fleet">
+                <input type="button" class="map-button" value="Map">
+                <input type="button" class="races-button" value="Races">
+                <input type="button" class="planets-button" value="Planets">
+                <input type="button" class="tech-button" value="Tech">
+                <input type="button" class="next-turn-button" value="Next Turn">
+            </button-bar>
+            <rigel-battlefield class="hidden" planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
                 <ship-display x="0" y="0" owner="human" type="0" health="10" size="behemoth" count="10"></ship-display>
-            </rigel-battlefield> -->
+            </rigel-battlefield>
         </rigel-game>
     </body>
 </html>

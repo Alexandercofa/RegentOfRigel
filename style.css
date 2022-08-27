@@ -67,16 +67,18 @@ rigel-starsystem.selected::before {
 
 .planet-details {
     position: relative;
+    overflow-y: visible;
     animation-name: planet-details-reveal;
     animation-duration: 1s;
-    left: calc(100vw - 300px);
-    width: 300px;
-    height: 100%;
+    left: calc(100vw - 20rem);
+    width: 20rem;
+    height: calc(100vh - 4rem);
     background-color: grey;
     outline: white solid 2px;
 }
 
 .planet-details.hidden {
+    display: block;
     animation-name: planet-details-hiding;
     animation-duration: 1s;
     left: calc(100vw + 2px);
@@ -104,6 +106,7 @@ rigel-starsystem.selected::before {
 }
 
 .toggle-details-symbol {
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -133,27 +136,46 @@ icon.locked {
     height: 4rem;
 }
 
-.planet-details .planet-summary>.habitability {
+.planet-details .planet-summary .resource {
     position: absolute;
+    left: 6rem;
+    top: 0rem;
+}
+
+.planet-details .planet-summary .max-population::after {
+    content: "mil"
+}
+
+.planet-details .planet-summary>.line1 {
+    position:absolute;
     left: 4rem;
     top: 1rem;
 }
-
-/* .planet-details .planet-summary>.resource-level {
-    
+.planet-details .planet-summary>.line2 {
+    position:absolute;
+    left: 4rem;
+    top: 2rem;
 }
-
-.planet-details .planet-summary>.max-population {
-    
-} */
+.planet-details .planet-summary>.line3 {
+    position:absolute;
+    left: 4rem;
+    top: 3rem;
+}
 
 .planet-details .planet-resources {
     position: relative;
+    top: 4.5rem;
 }
-
+.planet-resources .production {
+    position:absolute;
+    top: 1rem;
+    width: 100%;
+}
+.planet-resources>label {
+    position:absolute;
+}
 .planet-resources .production>div {
     position: relative;
-    top: 1.2rem;
     opacity: 0.7;
     transition: opacity 0.2s;
 }
@@ -166,7 +188,7 @@ icon.locked {
     width: 4rem;
 }
 
-input[type="range"] {
+.planet-resources input[type="range"] {
     position: absolute;
     /* appearance: none; */
     width: calc(100% - 4rem);
@@ -193,6 +215,124 @@ input[type="range"] {
     left: 50%;
 }
 
+.planet-details .planet-actions {
+    position: absolute;
+    width: 100%;
+    top: calc(125px + 8rem);
+}
+.planet-actions button {
+    position: absolute;
+    left: 9rem;
+    height: 3rem;
+    font-size: 1rem;
+}
+.planet-actions button:nth-child(2) {
+    top: 3rem;
+}
+.planet-actions button:nth-child(3) {
+    top: 6rem;
+}
+
+ship-selection {
+    position: absolute;
+    width: 9rem;
+    height: 9rem;
+    text-align: center;
+    overflow: hidden;
+}
+  
+ship-carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    /*
+    scroll-snap-points-x: repeat(300px);
+    scroll-snap-type: mandatory;
+    */
+}
+
+ship-carousel > ship {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 9rem;
+    height: 9rem;
+    margin-right: 50px;
+    border-radius: 10px;
+    transform-origin: center center;
+    transform: scale(1);
+    transition: transform 0.5s;
+    position: relative;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: darkslategrey;
+}
+ship-carousel > ship::before {
+    position:absolute;
+    content: " ";
+    background-color: aqua;
+    clip-path: var(--starship-shape1);
+    /* left: 50%; */
+    top: 0.5rem;
+    /* transform: translateX(-50%); */
+    width: 100%;
+    height: 6rem;
+}
+ship-carousel > ship::after {
+    position: absolute;
+    content: attr(name);
+    color: white;
+    height: 2rem;
+    width: 100%;
+    top: 7rem;
+    font-size: 1.5rem;
+}
+carousel-slides > ship:target {
+/*   transform: scale(0.8); */
+}
+
+button-bar {
+    position: absolute;
+    top: calc(100vh - 4rem);
+    width: 100vw;
+    height: 4rem;
+}
+button-bar>input[type="button"] {
+    position:absolute;
+    font-size: 1rem;
+    height: 4rem;
+    width: 12.5vw;
+    border-radius: 0%;
+}
+button-bar>input:first-child {
+    left:0vw;
+}
+button-bar>input:nth-child(2) {
+    left:12.5vw;
+}
+button-bar>input:nth-child(3) {
+    left:25vw;
+}
+button-bar>input:nth-child(4) {
+    left:37.5vw;
+}
+button-bar>input:nth-child(5) {
+    left:50vw;
+}
+button-bar>input:nth-child(6) {
+    left:62.5vw;
+}
+button-bar>input:nth-child(7) {
+    left:75vw;
+}
+button-bar>input:nth-child(8) {
+    left:87.5vw;
+}
 
 /* Battlefield style */
 rigel-battlefield {
@@ -280,4 +420,8 @@ rigel-battlefield ship-display:hover {
 
 rigel-battlefield ship-display[selected="true"] {
     outline: white solid 1px;
+}
+
+.hidden {
+    display: none;
 }

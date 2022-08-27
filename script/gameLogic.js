@@ -10,6 +10,8 @@ window.onload = addStarfieldListeners;
 //     }
 // }
 
+let test = null;
+
 let starfieldOffset = {x:0,y:0};
 let starfieldMargin = {left:'25px', top:'25px'}
 let starfieldStepSizePx = 100;
@@ -17,9 +19,12 @@ let starfieldStepSizePx = 100;
 let selectedSystem = document.querySelector("rigel-starsystem.selected");
 if(selectedSystem == null) selectedSystem = document.querySelector("rigel-starsystem");
 
+let player = document.querySelector("rigel-races race.player");
+
 function addStarfieldListeners() {
     selectedSystem = document.querySelector("rigel-starsystem.selected");
     if(selectedSystem == null) selectedSystem = document.querySelector("rigel-starsystem");
+    player = document.querySelector("rigel-races race.player");
 
     displayPlanetDetails();
 
@@ -75,6 +80,16 @@ function addStarfieldListeners() {
             displayPlanetDetails();
         });
     }
+    const shipCarousel = planetDetailsPanel.querySelector("ship-carousel");
+    shipCarousel.addEventListener("click", (e) => {
+        if(e.layerX >= shipCarousel.offsetWidth/2) {
+            setSelectedShip(parseFloat(shipCarousel.getAttribute("focus")) + 1);
+        } else {
+            setSelectedShip(parseFloat(shipCarousel.getAttribute("focus")) - 1);
+        }
+
+    });
+
     setStarsystemOffsets();
 }
 
@@ -101,8 +116,8 @@ function setStarsystemOffsets() {
 
 function togglePlanetDetails() {
     const planetDetails = document.querySelector(".planet-details");
-    planetDetails.classList.toggle("hidden")
-    planetDetails.querySelector(".toggle-details-text").classList.toggle("left-chevron");
+    planetDetails.classList.toggle("hidden");
+    planetDetails.querySelector(".toggle-details").classList.toggle("left-chevron");
 }
 
 function displayPlanetDetails() {
@@ -139,6 +154,7 @@ function displayPlanetDetails() {
             input.value = productionLevels[i];
             input.setAttribute("value", productionLevels[i]);
         }
+        populateShipCarousel();
     }
 }
 
@@ -194,4 +210,31 @@ function systemDetailsChanged() {
     const icon = element.querySelector("icon");
     icon.classList.add("unlocked");
     icon.classList.remove("locked");
+}
+//<ship-spec shipID="0" name="Colony Ship" size="cruiser" shape="shape1" computer="0" shield="0" ecm="0" armour="0" engine="1" maneuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
+
+function populateShipCarousel() {
+    const carousel = document.querySelector("ship-carousel");
+    const ship_specs = player.querySelectorAll("ship-spec");
+    const ship_count = ship_specs.length;
+    test = carousel;
+    while(carousel.lastChild != null){
+        carousel.removeChild(carousel.lastChild);
+    };
+    for (const spec of ship_specs) {
+        let ship = document.createElement("ship");
+        for (let i = 0; i < spec.attributes.length; i++) {
+            const a = spec.attributes.item(i);
+            ship.setAttribute(a.name, a.value);
+        }
+        carousel.appendChild(ship);
+    }
+}
+
+function setSelectedShip(shipID) {
+    const carousel = document.querySelector("ship-carousel");
+    const ship_count = carousel.children.length;
+    _shipID = (shipID + ship_count) % ship_count;
+    carousel.setAttribute("focus", _shipID)
+    carousel.scrollLeft = (carousel.scrollWidth/ship_count) * _shipID;
 }
