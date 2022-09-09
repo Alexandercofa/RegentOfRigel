@@ -472,6 +472,8 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
         star.setAttribute("ship-focus", "0");
 
         star.setAttribute("fleetID", "none");
+
+        starfield.appendChild(star);
     }
     // --- randomly choose opponents ---
     // --- set ai level ---
