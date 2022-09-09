@@ -12,9 +12,10 @@ window.onload = addListeners;
 
 let test = null;
 
+const gridSpacing = 10 ;
+const starfieldMargin = 20;
 let starfieldOffset = {x:0,y:0};
-let starfieldMargin = {left:'5px', top:'5px'}
-let starfieldStepSizePx = 100;
+let starfieldEdge = {left:'5px', top:'5px'};
 
 const systemNames = ["Absolutno", "Acamar", "Achernar", "Achird", "Acrab", "Acrux", "Acubens", "Adhafera", "Adhara", "Adhil", "Ain", "Ainalrami", "Aladfar", "Alamak", "Alasia", "Alathfar", "Albaldah", "Albali", "Albireo", "Alchiba", "Alcor", "Alcyone", "Aldebaran", "Alderamin", "Aldhanab", "Aldhibah", "Aldulfin", "Alfirk", "Algedi", "Algenib", "Algieba", "Algol", "Algorab", "Alhena", "Alioth", "Aljanah", "Alkaid", "Al Kalb al Rai", "Alkalurops", "Alkaphrah", "Alkarab", "Alkes", "Almaaz", "Almach", "Al Minliar al Asad", "Alnair", "Alnasl", "Alnilam", "Alnitak", "Alniyat", "Alphard", "Alphecca", "Alpheratz", "Alpherg", "Alrakis", "Alrescha", "Alruba", "Alsafi", "Alsciaukat", "Alsephina", "Alshain", "Alshat", "Altair", "Altais", "Alterf", "Aludra", "Alula Australis", "Alula Borealis", "Alya", "Alzirr", "Amadioha", "Amansinaya", "Anadolu", "Ancha", "Angetenar", "Aniara", "Ankaa", "Anser", "Antares", "Arcalís", "Arcturus", "Arkab Posterior", "Arkab Prior", "Arneb", "Ascella", "Asellus Australis", "Asellus Borealis", "Ashlesha", "Asellus Primus", "Asellus Secundus", "Asellus Tertius", "Aspidiske", "Asterope, Sterope", "Atakoraka", "Athebyne", "Atik", "Atlas", "Atria", "Avior", "Axólotl", "Ayeyarwady", "Azelfafage", "Azha", "Azmidi", "Baekdu", "Barnard's Star", "Baten Kaitos", "Beemim", "Beid", "Belel", "Bélénos", "Bellatrix", "Berehynia", "Betelgeuse", "Bharani", "Bibhā", "Biham", "Bosona", "Botein", "Brachium", "Bubup", "Buna", "Bunda", "Canopus", "Capella", "Caph", "Castor", "Castula", "Cebalrai", "Ceibo", "Celaeno", "Cervantes", "Chalawan", "Chamukuy", "Chaophraya", "Chara", "Chason", "Chechia", "Chertan", "Citadelle", "Citalá", "Cocibolca", "Copernicus", "Cor Caroli", "Cujam", "Cursa", "Dabih", "Dalim", "Deneb", "Deneb Algedi", "Denebola", "Diadem", "Dingolay", "Diphda", "Dìwö", "Diya", "Dofida", "Dombay", "Dschubba", "Dubhe", "Dziban", "Ebla", "Edasich", "Electra", "Elgafar", "Elkurud", "Elnath", "Eltanin", "Emiw", "Enif", "Errai", "Fafnir", "Fang", "Fawaris", "Felis", "Felixvarela", "Flegetonte", "Fomalhaut", "Formosa", "Franz", "Fulu", "Funi", "Fumalsamakah", "Furud", "Fuyue", "Gacrux", "Gakyid", "Garnet Star", "Giausar", "Gienah", "Ginan", "Gloas", "Gomeisa", "Graffias", "Grumium", "Gudja", "Gumala", "Guniibuu", "Hadar", "Haedus", "Hamal", "Hassaleh", "Hatysa", "Helvetios", "Heze", "Hoggar", "Homam", "Horna", "Hunahpú", "Hunor", "Iklil", "Illyrian", "Imai", "Intercrus", "Inquill", "Intan", "Irena", "Itonda", "Izar", "Jabbah", "Jishui", "Kaffaljidhma", "Kakkab", "Kalausi", "Kamuy", "Kang", "Karaka", "Kaus Australis", "Kaus Borealis", "Kaus Media", "Kaveh", "Kekouan", "Keid", "Khambalia", "Kitalpha", "Kochab", "Koeia", "Koit", "Kornephoros", "Kraz", "Kuma", "Kurhah", "La Superba", "Larawag", "Lerna", "Lesath", "Libertas", "Lich", "Liesma", "Lilii Borea", "Lionrock", "Lucilinburhuc", "Lusitânia", "Maasym", "Macondo", "Mago", "Mahasim", "Mahsati", "Maia", "Malmok", "Marfak", "Marfik", "Markab", "Markeb", "Márohu", "Marsic", "Matar", "Mazaalai", "Mebsuta", "Megrez", "Meissa", "Mekbuda", "Meleph", "Menkalinan", "Menkar", "Menkent", "Menkib", "Merak", "Merga", "Meridiana", "Merope", "Mesarthim", "Miaplacidus", "Mimosa", "Minchir", "Minelauva", "Mintaka", "Mira", "Mirach", "Miram", "Mirfak", "Mirzam", "Misam", "Mizar", "Moldoveanu", "Mönch", "Montuno", "Morava", "Moriah", "Mothallah", "Mouhoun", "Mpingo", "Muliphein", "Muphrid", "Muscida", "Musica", "Muspelheim", "Nahn", "Naledi", "Naos", "Nash", "Nashira", "Násti", "Natasha", "Navi", "Nekkar", "Nembus", "Nenque", "Nervia", "Nihal", "Nikawiy", "Nosaxa", "Nunki", "Nusakan", "Nushagak", "Nyamien", "Ogma", "Okab", "Paikauhale", "Parumleo", "Peacock", "Petra", "Phact", "Phecda", "Pherkad", "Phoenicia", "Piautos", "Pincoya", "Pipoltr", "Pipirima", "Pleione", "Poerava", "Polaris", "Polaris Australis", "Polis", "Pollux", "Porrima", "Praecipua", "Prima Hyadum", "Procyon", "Propus", "Proxima Centauri", "Ran", "Rapeto", "Rasalas", "Rasalgethi", "Rasalhague", "Rastaban", "Regor", "Regulus", "Revati", "Rigel", "Rigil Kentaurus", "Rosalíadecastro", "Rotanev", "Ruchbah", "Rukbat", "Sabik", "Saclateni", "Sadachbia", "Sadalbari", "Sadalmelik", "Sadalsuud", "Sadr", "Sagarmatha", "Saiph", "Salm", "Sāmaya", "Sansuna", "Sargas", "Sarin", "Sarir", "Sceptrum", "Scheat", "Schedar", "Secunda Hyadum", "Segin", "Seginus", "Sham", "Shama", "Sharjah", "Shaula", "Sheliak", "Sheratan", "Sika", "Sirius", "Situla", "Skat", "Solaris", "Spica", "Sterrennacht", "Stribor", "Sualocin", "Subra", "Suhail", "Sulafat", "Syrma", "Tabit", "Taika", "Taiyangshou", "Taiyi", "Talitha", "Tangra", "Tania Australis", "Tania Borealis", "Tapecue", "Tarazed", "Tarf", "Taygeta", "Tegmine", "Tejat", "Terebellum", "Tevel", "Thabit", "Theemin", "Thuban", "Tiaki", "Tianguan", "Tianyi", "Timir", "Tislit", "Titawin", "Tojil", "Toliman", "Tonatiuh", "Torcular", "Tuiren", "Tupã", "Tupi", "Tureis", "Ukdah", "Uklun", "Unukalhai", "Unurgunite", "Uruk", "Vega", "Veritate", "Vindemiatrix", "Wasat", "Wazn", "Wezen", "Wurren", "Xamidimura", "Xihe", "Xuange", "Yed Posterior", "Yed Prior", "Yildun", "Zaniah", "Zaurak", "Zavijava", "Zhang", "Zibal", "Zosma", "Zubenelgenubi", "Zubenelhakrabi", "Zubeneschamali"];
 
@@ -163,16 +164,16 @@ function moveStarfield(e) {
     const planetDetails = document.querySelector(".planet-details");
 
     let offsetLeft = e.clientX - starfieldOffset.x + 'px';
-    if (parseFloat(offsetLeft) + starfield.clientWidth < game.clientWidth - parseFloat(starfieldMargin.left))
-        offsetLeft = game.clientWidth - parseFloat(starfieldMargin.left) - starfield.clientWidth + "px";
-    if (parseFloat(offsetLeft) > parseFloat(starfieldMargin.left))
-        offsetLeft = starfieldMargin.left;
+    if (parseFloat(offsetLeft) + starfield.clientWidth < game.clientWidth - parseFloat(starfieldEdge.left))
+        offsetLeft = game.clientWidth - parseFloat(starfieldEdge.left) - starfield.clientWidth + "px";
+    if (parseFloat(offsetLeft) > parseFloat(starfieldEdge.left))
+        offsetLeft = starfieldEdge.left;
 
     let offsetTop = e.clientY - starfieldOffset.y + 'px';
-    if (parseFloat(offsetTop) + starfield.clientHeight < game.clientHeight - parseFloat(starfieldMargin.top) - button_bar.clientHeight)
-        offsetTop = game.clientHeight - parseFloat(starfieldMargin.top) - starfield.clientHeight - button_bar.clientHeight + "px";
-    if (parseFloat(offsetTop) > parseFloat(starfieldMargin.top))
-        offsetTop = starfieldMargin.top;
+    if (parseFloat(offsetTop) + starfield.clientHeight < game.clientHeight - parseFloat(starfieldEdge.top) - button_bar.clientHeight)
+        offsetTop = game.clientHeight - parseFloat(starfieldEdge.top) - starfield.clientHeight - button_bar.clientHeight + "px";
+    if (parseFloat(offsetTop) > parseFloat(starfieldEdge.top))
+        offsetTop = starfieldEdge.top;
     
     starfield.style.left = offsetLeft;
     starfield.style.top  = offsetTop;
@@ -182,9 +183,11 @@ function setStarsystemOffsets() {
     const starfield = document.querySelector('rigel-starfield');
     const starsystems = starfield.querySelectorAll('rigel-starsystem')
     for (const starsystem of starsystems) {
-        starsystem.style.left = starsystem.getAttribute('x') * starfieldStepSizePx +'px';
-        starsystem.style.top = starsystem.getAttribute('y') * starfieldStepSizePx +'px';
+        starsystem.style.left = starfieldMargin + starsystem.getAttribute('x') * gridSpacing +'rem';
+        starsystem.style.top = starfieldMargin + starsystem.getAttribute('y') * gridSpacing +'rem';
     }
+    starfield.style.left = -starfieldMargin + 'rem';
+    starfield.style.top = -starfieldMargin + 'rem';
 }
 
 function togglePlanetDetails() {
@@ -403,24 +406,23 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
     // --- create new galaxy ---
     // margin must be >20rem from nearest system, so the planet details bar doesn't obscure any planets
     const starfield = document.querySelector("rigel-starfield");
+    const gridSize = size/2;
     while(starfield.lastChild != null) 
         starfield.removeChild(starfield.lastChild)
-    const gridSpacing = 15;
-    const gridSize = size/5;
-    const starfieldMargin = 20;
     starfield.style.width = gridSize * gridSpacing + starfieldMargin * 2 + "rem"
     starfield.style.height = gridSize * gridSpacing + starfieldMargin * 2 + "rem"
-    starfield.style.left = starfieldMargin;
-    starfield.style.top = starfieldMargin;
+    // starfield.style.left = starfieldMargin + "rem";
+    // starfield.style.top = starfieldMargin + "rem";
     const getResultFromPercentList = (percentList, percentage) => {
-        //normalise percentList
-        let listTotal = percentList.reduce((a,b) => {return a+b});
-        normalisedPercentList = percentList.map((val) => {Math.floor((val/listTotal) * 100)});
-
+        // //normalise percentList
+        // let listTotal = percentList.reduce((a,b) => {return a+b});
+        // let normalisedPercentList = percentList.map((val) => {Math.floor((val/listTotal) * 100)});
+        // console.log(normalisedPercentList)
+        let normalisedPercentList = percentList;
         // get result
         for (let i = 0; i < normalisedPercentList.length; i++) {
             percentage -= normalisedPercentList[i];
-            if(percentage <= 0)
+            if(percentage < 0)
                 return i;
         }
         return percentList.length - 1;
@@ -433,22 +435,30 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
         let nameIndex = null;
         do {
             nameIndex = getRndInteger(0, systemNames.length);
-        } while(nameIndecies.includes(nameIndex));
+        } while(nameIndecies.length < systemNames.length && nameIndecies.includes(nameIndex));
         nameIndecies.push(nameIndex);
 
+        let name = systemNames[nameIndex];
+        if(nameIndex == null) {
+            name = "Planet " + i;
+        }
         const star = document.createElement("rigel-starsystem");
-        star.setAttribute("name", systemNames[nameIndex]);
+        star.setAttribute("name", name);
         
-        let coords = {}
+        let match = false;
+        let coords = null;
         do {
+            match = false;
             coords = {x: getRndInteger(0, gridSize), y: getRndInteger(0, gridSize)};
-        } while(usedCoords.reduce((acc, usedCoord) => {
-            acc |= (usedCoord.x == coords.x) && (usedCoord.y = coords.y);
-        }, false));
+            for (let i = 0; i < usedCoords.length; i++) {
+                const oldCoord = usedCoords[i];
+                match |= ((oldCoord.x == coords.x) && (oldCoord.y == coords.y));
+            }
+        } while(match);
         usedCoords.push(coords);
         star.setAttribute("x", coords.x);
         star.setAttribute("y", coords.y);
-        
+
         star.setAttribute("fleetID", "none");
         let classification = starClassifications[getRndInteger(0, starClassifications.length)];
         star.setAttribute("classification", classification.colour);
@@ -465,9 +475,10 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
 
         //fleetID="0"
         star.setAttribute("production-locks", "0 0 0 0 0");
-        star.setAttribute("production-level", "20 20 20 20 20");
+        star.setAttribute("production-levels", "20 20 20 20 20");
         
         star.setAttribute("owner", "none");
+        star.setAttribute("ship-production", "0")
         setShipProductions(star);
         star.setAttribute("ship-focus", "0");
 
@@ -475,6 +486,11 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
 
         starfield.appendChild(star);
     }
+    setStarsystemOffsets();
+
+    selectedSystem = starfield.firstChild;
+    addStarfieldListeners();
+
     // --- randomly choose opponents ---
     // --- set ai level ---
 
