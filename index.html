@@ -27,15 +27,15 @@
                 <fleet fleetID="1" owner="humans"><ship type="0" count="20"></ship></fleet>
             </rigel-fleets>
             <rigel-starfield>
-                <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20">
+                <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 10" ship-focus="0">
                 </rigel-starsystem>
-                <rigel-starsystem class='selected' x="3" y="2" name="Test1" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="100 20 20 20 20">
+                <rigel-starsystem class='selected' x="3" y="2" name="Test1" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="100 20 20 20 20" ship-production="0 0 0" ship-focus="0">
                 </rigel-starsystem>
-                <rigel-starsystem x="2" y="1" name="Test2" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                <rigel-starsystem x="2" y="1" name="Test2" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="0 30 0" ship-focus="1">
                 </rigel-starsystem>
-                <rigel-starsystem x="7" y="5" name="Test3" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                <rigel-starsystem x="7" y="5" name="Test3" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="2">
                 </rigel-starsystem>
-                <rigel-starsystem x="9" y="3" name="Test4" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20">
+                <rigel-starsystem x="9" y="3" name="Test4" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="0">
                 </rigel-starsystem>
             </rigel-starfield>
             <div class="planet-details">
@@ -51,12 +51,12 @@
                 </div>
                 <div class="planet-resources">
                     <div class="population"><label>Population: <b class="population-value">10</b></label></div><div class="missile-bases"><label>Bases: <b class="missile-bases-value">10</b></label></div>
-                    <div class="production"> <label>Production: <b class="production-value">100</b></label>
-                        <div class="ship"><label><icon class="unlocked"></icon>Ship</label><input type="range" min="0" max="100" value="20" step="5"></div>
-                        <div class="defense"><label><icon class="unlocked"></icon>Def.</label><input type="range" min="0" max="100" value="20" step="5"></div>
-                        <div class="industry"><label><icon class="unlocked"></icon>Ind.</label><input type="range" min="0" max="100" value="20" step="5"></div>
-                        <div class="ecology"><label><icon class="unlocked"></icon>Eco.</label><input type="range" min="0" max="100" value="20" step="5"></div>
-                        <div class="technology"><label><icon class="unlocked"></icon>Tech</label><input type="range" min="0" max="100" value="20" step="5"></div>
+                    <div class="production"> <label>Production: <b class="production-effective-value" alt="Effective Production">100</b> <b>(<b class="production-true-value" alt="True Production">100</b>)</b></label>
+                        <div class="ship"><label><icon class="unlocked"></icon>Ship</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">1/year</label></div>
+                        <div class="defense"><label><icon class="unlocked"></icon>Def.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
+                        <div class="industry"><label><icon class="unlocked"></icon>Ind.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
+                        <div class="ecology"><label><icon class="unlocked"></icon>Eco.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
+                        <div class="technology"><label><icon class="unlocked"></icon>Tech</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
                     </div>
                 
                     </div>
@@ -86,6 +86,27 @@
             <rigel-battlefield class="hidden" planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
                 <ship-display x="0" y="0" owner="human" type="0" health="10" size="behemoth" count="10"></ship-display>
             </rigel-battlefield>
+            <rigel-menu class="pause-menu hidden">
+                <input type="button" value="Continue"></input>
+                <input type="button" value="New Game"></input>
+                <input type="button" value="Save Game"></input>
+                <input type="button" value="Load Game"></input>
+                <input type="button" value="Settings"></input>
+            </rigel-menu>
+            <rigel-menu class="new-game hidden">
+                Galaxy Size: <input type="button" value="tiny">
+                Difficulty: <input type="button" value="easy">
+                Opponents: <input type="button" value="one">
+            </rigel-menu>
+            <rigel-menu class="save-game hidden">
+
+            </rigel-menu>
+            <rigel-menu class="load-game hidden">
+
+            </rigel-menu>
+            <rigel-menu class="settings hidden">
+
+            </rigel-menu>
         </rigel-game>
     </body>
 </html>

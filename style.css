@@ -24,8 +24,8 @@ rigel-starfield {
     clip-path: fill-box;
     left: 0px;
     top: 0px;
-    width:3000px;
-    height:3000px;
+    width:100rem;
+    height:100rem;
     background-color: purple;
 }
 
@@ -34,8 +34,8 @@ rigel-starsystem {
     color:white;
     background-color: white;
     border-radius: 100%;
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
 }
 
 rigel-starsystem::after {
@@ -72,7 +72,7 @@ rigel-starsystem.selected::before {
     animation-duration: 1s;
     left: calc(100vw - 20rem);
     width: 20rem;
-    height: calc(100vh - 4rem);
+    height: 90vh;
     background-color: grey;
     outline: white solid 2px;
 }
@@ -187,11 +187,15 @@ icon.locked {
 .planet-resources .production>div>label {
     width: 4rem;
 }
+.planet-resources .production>div>label.output {
+    position: absolute;
+    left: calc(100% - 3.5rem);
+}
 
 .planet-resources input[type="range"] {
     position: absolute;
     /* appearance: none; */
-    width: calc(100% - 4rem);
+    width: calc(100% - 8rem);
     top: 50%;
     left: calc(4rem);
     transform: translate(0%, -50%);
@@ -298,14 +302,14 @@ carousel-slides > ship:target {
 
 button-bar {
     position: absolute;
-    top: calc(100vh - 4rem);
+    top: 90vh;
     width: 100vw;
-    height: 4rem;
+    height: 10vh;
 }
 button-bar>input[type="button"] {
     position:absolute;
     font-size: 1rem;
-    height: 4rem;
+    height: 10vh;
     width: 12.5vw;
     border-radius: 0%;
 }
@@ -420,6 +424,65 @@ rigel-battlefield ship-display:hover {
 
 rigel-battlefield ship-display[selected="true"] {
     outline: white solid 1px;
+}
+
+/* menu style */
+rigel-menu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+rigel-menu::before {
+    position: absolute;
+    content: " ";
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 60%;
+}
+
+rigel-menu::after {
+    position:absolute;
+    content: "Regent Of Rigel";
+    color: white;
+    font-size: 10vh;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+rigel-menu > input[type="button"] {
+    position: absolute;
+    opacity: 100%;
+    font-size: 1rem;
+    border-radius: 0%;
+    left: 40vw;
+    width: 20vw;
+    height: 10vh;
+}
+
+rigel-menu > input:nth-child(1) {
+    top: 20vh;
+}
+rigel-menu > input:nth-child(2) {
+    top: 30vh;
+}
+rigel-menu > input:nth-child(3) {
+    top: 40vh;
+}
+rigel-menu > input:nth-child(4) {
+    top: 50vh;
+}
+rigel-menu > input:nth-child(5) {
+    top: 60vh;
+}
+rigel-menu > input:nth-child(6) {
+    top: 70vh;
 }
 
 .hidden {
