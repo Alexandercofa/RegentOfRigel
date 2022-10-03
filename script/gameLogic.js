@@ -1,15 +1,5 @@
 window.onload = addListeners;
 
-// function generateGalaxy(planetCount) {
-//     let planetsGenerated = 0;
-//     let generator_threshold = 0.1;
-//     for (let x = 0; x < planetCount; x++) {
-//         for(let y = 0; y < planetCount; y++) {
-//             if(Math.random() > generator_threshold)
-//         }        
-//     }
-// }
-
 let test = null;
 
 const gridSpacing = 10 ;
@@ -56,7 +46,7 @@ function addStarfieldListeners() {
 
     window.addEventListener('mouseup', (e) => {
         window.removeEventListener('mousemove', moveStarfield, true);
-    },false)
+    }, false);
 
     const starsystems = starfield.querySelectorAll("rigel-starsystem");
     for (const starsystem of starsystems) {
@@ -103,7 +93,6 @@ function addStarfieldListeners() {
         } else {
             setSelectedShip(parseFloat(shipCarousel.getAttribute("focus")) - 1);
         }
-
     });
 
 }
@@ -289,7 +278,6 @@ function systemDetailsChanged() {
     icon.classList.add("unlocked");
     icon.classList.remove("locked");
 }
-//<ship-spec shipID="0" name="Colony Ship" size="cruiser" shape="shape1" computer="0" shield="0" ecm="0" armour="0" engine="1" maneuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
 
 function populateShipCarousel() {
     const carousel = document.querySelector("ship-carousel");
@@ -316,50 +304,37 @@ function setSelectedShip(shipID) {
     carousel.setAttribute("focus", _shipID)
     carousel.scrollLeft = (carousel.scrollWidth/ship_count) * _shipID;
 }
-// TODO: get actor from system, then update ship productions for that actor
-function updateShipProductions(system) {
-    // const ships = planetDetailsPanel.querySelectorAll("ship-carousel ship");
-    let ship_production = system.getAttribute("ship-production").split(" ").map((s) => {parseFloat(s)});
-    for (let i = 0; i < ships.length; i++) {
-        if(ship_production[i] == null) {
-            ship_production[i] = 0;
-        }
-        ships[i].setAttribute("production", ship_production[i]);
-    }
-    // deal with old production
-    if(ship_production.length > ships.length) {
-        for (let i = ships.length; i < ship_production.length; i++) {
-            system.setAttribute("surplus-production", parseFloat(system.getAttribute("surplus-production")) + ship_production[i]);
-        }
-        ship_production.length = ships.length;
-    }
-    system.setAttribute("ship-production", ship_production.join(" "));
-}
-
+// TODO: get owner from system, then update ship productions for that actor
 function setShipProductions(system) {
-    const planetDetailsPanel = document.querySelector(".planet-details");
-    const ships = planetDetailsPanel.querySelectorAll("ship-carousel ship");
-    let ship_production = system.getAttribute("ship-production").split(" ").map((s) => {parseFloat(s)});
-    for (let i = 0; i < ships.length; i++) {
-        if(ship_production[i] == null) {
-            ship_production[i] = 0;
+    const owner = getActorFromID(selectedSystem.getAttribute("owner"));
+    if(owner != null) {
+        const planetDetailsPanel = document.querySelector(".planet-details");
+        const ships = owner.querySelectorAll("ship-spec");
+        let ship_production = system.getAttribute("ship-production").split(" ").map((s) => {parseFloat(s)});
+        for (let i = 0; i < ships.length; i++) {
+            if(ship_production[i] == null) {
+                ship_production[i] = 0;
+            }
+            // ships[i].setAttribute("production", ship_production[i]);
         }
-        ships[i].setAttribute("production", ship_production[i]);
-    }
-    // deal with old production
-    if(ship_production.length > ships.length) {
-        for (let i = ships.length; i < ship_production.length; i++) {
-            system.setAttribute("surplus-production", parseFloat(system.getAttribute("surplus-production")) + ship_production[i]);
+        // deal with old production
+        if(ship_production.length > ships.length) {
+            for (let i = ships.length; i < ship_production.length; i++) {
+                system.setAttribute("surplus-production", parseFloat(system.getAttribute("surplus-production")) + ship_production[i]);
+            }
+            ship_production.length = ships.length;
         }
-        ship_production.length = ships.length;
+        system.setAttribute("ship-production", ship_production.join(" "));
     }
-    system.setAttribute("ship-production", ship_production.join(" "));
 }
 
 function shipDesignsUpdated() {
     // TODO: update production values for all systems
     populateShipCarousel();
-    setShipProductions(selectedSystem);
+    const starsystems = document.querySelectorAll("rigel-starfield>rigel-starsystem");
+    for (let i = 0; i < starsystems.length; i++) {
+        setShipProductions(selectedSystem);
+    }
     setSelectedShip(0)
 }
 //TODO: make star types actually distinct.
@@ -411,10 +386,8 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
         starfield.removeChild(starfield.lastChild)
     starfield.style.width = gridSize * gridSpacing + starfieldMargin * 2 + "rem"
     starfield.style.height = gridSize * gridSpacing + starfieldMargin * 2 + "rem"
-    // starfield.style.left = starfieldMargin + "rem";
-    // starfield.style.top = starfieldMargin + "rem";
     const getResultFromPercentList = (percentList, percentage) => {
-        // //normalise percentList
+        // //normalise percentList TODO: fix this
         // let listTotal = percentList.reduce((a,b) => {return a+b});
         // let normalisedPercentList = percentList.map((val) => {Math.floor((val/listTotal) * 100)});
         // console.log(normalisedPercentList)
@@ -480,6 +453,7 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
         star.setAttribute("owner", "none");
         star.setAttribute("ship-production", "0")
         setShipProductions(star);
+        
         star.setAttribute("ship-focus", "0");
 
         star.setAttribute("fleetID", "none");
@@ -494,6 +468,18 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
     // --- randomly choose opponents ---
     // --- set ai level ---
 
+}
+
+function getActorFromID(id) {
+    if(parseInt(id) != NaN) {
+        const actors = document.querySelectorAll("rigel-races>race");
+        for (let i = 0; i < actors.length; i++) {
+            const actor = actors.item(i);
+            if(parseInt(actor.getAttribute("raceID")) == parseInt(id))
+                return actor;
+        }
+    }
+    return null;
 }
 
 function getRndInteger(min, max) {
