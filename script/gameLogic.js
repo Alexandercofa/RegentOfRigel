@@ -191,9 +191,13 @@ function displayPlanetDetails() {
         const name = planetDetailsPanel.querySelector(".planet-name");
         const [image, habitability, resources, max_pop] = planetDetailsPanel.querySelectorAll(".planet-summary>div");
         const allProduction = planetDetailsPanel.querySelectorAll(".production>div");
-        const [ship, defense, industry, ecology, technology] = allProduction;
         name.innerHTML = selectedSystem.getAttribute("name");
         
+        //TODO: select planet image.
+
+        habitability.querySelector(".habitability").innerHTML = selectedSystem.getAttribute("habitability");
+        resources.querySelector(".resource-level").innerHTML = selectedSystem.getAttribute("resource-level");
+        max_pop.querySelector(".max-population").innerHTML = selectedSystem.getAttribute("max-population");
 
         //production locks and production levels
         let productionLocks = selectedSystem.getAttribute("production-locks").split(" ").map((lock) => {return lock != "0"});
