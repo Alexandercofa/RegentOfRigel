@@ -190,28 +190,28 @@ function displayPlanetDetails() {
         const planetDetailsPanel = document.querySelector(".planet-details");
         const name = planetDetailsPanel.querySelector(".planet-name");
         const [image, habitability, resources, max_pop] = planetDetailsPanel.querySelectorAll(".planet-summary>*");
-        const [population, bases, production] = planetDetailsPanel.querySelectorAll(".planet-resources>resources");
+        const [population, bases, production] = planetDetailsPanel.querySelectorAll(".planet-resources>*");
         const allProduction = planetDetailsPanel.querySelectorAll(".production>div");
         name.innerHTML = selectedSystem.getAttribute("name");
-        
+        console.log(population, bases, production);
         //TODO: select planet image.
 
         habitability.querySelector(".habitability").innerHTML = selectedSystem.getAttribute("habitability");
         resources.querySelector(".resource-level").innerHTML = selectedSystem.getAttribute("resource-level");
         max_pop.querySelector(".max-population").innerHTML = selectedSystem.getAttribute("max-population");
 
-        population.querySelector("population-value").innerHTML = selectedSystem.getAttribute("population");
-        bases.querySelector("missile-bases-value").innerHTML = selectedSystem.getAttribute("missile-bases");
+        population.querySelector(".population-value").innerHTML = selectedSystem.getAttribute("population");
+        bases.querySelector(".missile-bases-value").innerHTML = selectedSystem.getAttribute("missile-bases");
         //TODO: calculate effective production.
-        production.querySelector("production-effective-value").innerHTML = selectedSystem.getAttribute("production");
-        production.querySelector("production-true-value").innerHTML = selectedSystem.getAttribute("production");
+        production.querySelector(".production-effective-value").innerHTML = selectedSystem.getAttribute("production");
+        production.querySelector(".production-true-value").innerHTML = selectedSystem.getAttribute("production");
 
         //production locks and production levels
         let productionLocks = selectedSystem.getAttribute("production-locks").split(" ").map((lock) => {return lock != "0"});
 
         balanceSystemProduction()
         let productionLevels = selectedSystem.getAttribute("production-levels").split(" ").map((prod) => {return parseFloat(prod)});
-        
+        //TODO: set the 'per year' values.
         for (let i = 0; i < allProduction.length; i++) {
             const element = allProduction[i];
             if (productionLocks[i]) {
@@ -446,18 +446,23 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
         star.setAttribute("fleetID", "none");
         let classification = starClassifications[getRndInteger(0, starClassifications.length)];
         star.setAttribute("classification", classification.colour);
-        //TODO: weight according to classification:
 
+        //weight according to classification:
         let habitability = starHabitability[getResultFromPercentList(classification.habitabilityPercent, getRndInteger(0, 101))];
         star.setAttribute("habitability", habitability.name);
-        //TODO: determine based on habitability
+        //determine based on habitability
         let maxPop = potentialMaxPopulation[getResultFromPercentList(habitability.maxPopPercent, getRndInteger(0, 101))];
         star.setAttribute("max-population", maxPop);
+        star.setAttribute("population", "0");
 
         let resource = starResources[getResultFromPercentList(classification.resourcePercent, getRndInteger(0, 101))];
         star.setAttribute("resource-level", resource.name);
 
+        star.setAttribute("missile-bases", "0");
+
         //fleetID="0"
+        //TODO: calculate production.
+        star.setAttribute("production", "100");
         star.setAttribute("production-locks", "0 0 0 0 0");
         star.setAttribute("production-levels", "20 20 20 20 20");
         
