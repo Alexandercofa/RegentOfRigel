@@ -140,6 +140,7 @@ icon.locked {
     position: absolute;
     left: 6rem;
     top: 0rem;
+    width: 14rem;
 }
 
 .planet-details .planet-summary .max-population::after {

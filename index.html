@@ -27,15 +27,15 @@
                 <fleet fleetID="1" owner="humans"><ship type="0" count="20"></ship></fleet>
             </rigel-fleets>
             <rigel-starfield>
-                <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 10" ship-focus="0">
+                <rigel-starsystem x="1" y="1" name="Rigel" fleetID="0" classification="yellow" population="100" max-population="250" habitability="gaia" resource-level="rigel" production-locks="1 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 10" ship-focus="0" missile-bases="0" production="100">
                 </rigel-starsystem>
-                <rigel-starsystem class='selected' x="3" y="2" name="Test1" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="100 20 20 20 20" ship-production="0 0 0" ship-focus="0">
+                <rigel-starsystem class='selected' x="3" y="2" name="Test1" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="100 20 20 20 20" ship-production="0 0 0" ship-focus="0" missile-bases="0" production="100" population="100">
                 </rigel-starsystem>
-                <rigel-starsystem x="2" y="1" name="Test2" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="0 30 0" ship-focus="1">
+                <rigel-starsystem x="2" y="1" name="Test2" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="0 30 0" ship-focus="1" missile-bases="0" production="100" population="100">
                 </rigel-starsystem>
-                <rigel-starsystem x="7" y="5" name="Test3" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="2">
+                <rigel-starsystem x="7" y="5" name="Test3" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="2" missile-bases="0" production="100" population="100">
                 </rigel-starsystem>
-                <rigel-starsystem x="9" y="3" name="Test4" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="0">
+                <rigel-starsystem x="9" y="3" name="Test4" classification="yellow" max-population="250" habitability="gaia" resource-level="rigel" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" ship-production="30 0 0" ship-focus="0" missile-bases="0" production="100" population="100">
                 </rigel-starsystem>
             </rigel-starfield>
             <div class="planet-details">
@@ -50,8 +50,8 @@
                     <label class="line3">Max Pop:<b class="resource max-population">250</b></label>
                 </div>
                 <div class="planet-resources">
-                    <div class="population"><label>Population: <b class="population-value">10</b></label></div><div class="missile-bases"><label>Bases: <b class="missile-bases-value">10</b></label></div>
-                    <div class="production"> <label>Production: <b class="production-effective-value" alt="Effective Production">100</b> <b>(<b class="production-true-value" alt="True Production">100</b>)</b></label>
+                    <div class="resource population"><label>Population: <b class="population-value">10</b></label></div><div class="resource missile-bases"><label>Bases: <b class="missile-bases-value">10</b></label></div>
+                    <div class="resource production"> <label>Production: <b class="production-effective-value" alt="Effective Production">100</b> <b>(<b class="production-true-value" alt="True Production">100</b>)</b></label>
                         <div class="ship"><label><icon class="unlocked"></icon>Ship</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">1/year</label></div>
                         <div class="defense"><label><icon class="unlocked"></icon>Def.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
                         <div class="industry"><label><icon class="unlocked"></icon>Ind.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>

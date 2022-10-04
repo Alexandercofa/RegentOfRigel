@@ -189,7 +189,8 @@ function displayPlanetDetails() {
     if(selectedSystem != null) {
         const planetDetailsPanel = document.querySelector(".planet-details");
         const name = planetDetailsPanel.querySelector(".planet-name");
-        const [image, habitability, resources, max_pop] = planetDetailsPanel.querySelectorAll(".planet-summary>div");
+        const [image, habitability, resources, max_pop] = planetDetailsPanel.querySelectorAll(".planet-summary>*");
+        const [population, bases, production] = planetDetailsPanel.querySelectorAll(".planet-resources>resources");
         const allProduction = planetDetailsPanel.querySelectorAll(".production>div");
         name.innerHTML = selectedSystem.getAttribute("name");
         
@@ -198,6 +199,12 @@ function displayPlanetDetails() {
         habitability.querySelector(".habitability").innerHTML = selectedSystem.getAttribute("habitability");
         resources.querySelector(".resource-level").innerHTML = selectedSystem.getAttribute("resource-level");
         max_pop.querySelector(".max-population").innerHTML = selectedSystem.getAttribute("max-population");
+
+        population.querySelector("population-value").innerHTML = selectedSystem.getAttribute("population");
+        bases.querySelector("missile-bases-value").innerHTML = selectedSystem.getAttribute("missile-bases");
+        //TODO: calculate effective production.
+        production.querySelector("production-effective-value").innerHTML = selectedSystem.getAttribute("production");
+        production.querySelector("production-true-value").innerHTML = selectedSystem.getAttribute("production");
 
         //production locks and production levels
         let productionLocks = selectedSystem.getAttribute("production-locks").split(" ").map((lock) => {return lock != "0"});
