@@ -1,8 +1,8 @@
-window.onload = addListeners;
+window.onload = on_load;
 
 let test = null;
-
-const gridSpacing = 10 ;
+let global_settings = null;
+const gridSpacing = 10;
 const starfieldMargin = 20;
 let starfieldOffset = {x:0,y:0};
 let starfieldEdge = {left:'5px', top:'5px'};
@@ -12,13 +12,20 @@ const systemNames = ["Absolutno", "Acamar", "Achernar", "Achird", "Acrab", "Acru
 let selectedSystem = null;
 let player = null;
 
-function addListeners() {
+let battlefieldSelectedShip = null;
+
+function on_load() {
     selectedSystem = document.querySelector("rigel-starsystem.selected");
     if(selectedSystem == null) selectedSystem = document.querySelector("rigel-starsystem");
     player = document.querySelector("rigel-races race.player");
+    global_settings = document.querySelector("rigel-global-settings");
 
     setStarsystemOffsets();
 
+    addListeners()
+}
+
+function addListeners() {
     addStarfieldListeners();
     addBattlefieldListeners();
     addMenuListeners();
@@ -97,7 +104,318 @@ function addStarfieldListeners() {
 
 }
 function addBattlefieldListeners() {
+    const battlefield = document.querySelector("rigel-battlefield");
+    const css = document.styleSheets[0].cssRules;
+    let afterBattlefield = null;
+    for (let i = 0; i < css.length; i++) {
+        if (css[i].selectorText == "rigel-battlefield::after") {
+            afterBattlefield = css[i];
+        }
+    }
+    const style = window.getComputedStyle(document.querySelector("rigel-battlefield"));
+
+    const getGridCoords = (e) => {
+            // get coordinates in grid space
+            const columnWidth = parseFloat(style.gridTemplateColumns.split(" ")[0]) + parseFloat(style.columnGap);
+            const rowHeight = parseFloat(style.gridTemplateRows.split(" ")[0]) + parseFloat(style.rowGap);
+            test = e;
+            const x = Math.floor(e.clientX / columnWidth);
+            const y = Math.floor(e.clientY / rowHeight);
+            return [x, y];
+    }
+    // const gridCoordsToPx = (x, y) => {
+    //     //get coordinates in screen space
+    //     const columnGap = parseFloat(style.columnGap), rowGap = parseFloat(style.rowGap);
+    //     const columnWidth = parseFloat(style.gridTemplateColumns.split(" ")[0]) + columnGap;
+    //     const rowHeight = parseFloat(style.gridTemplateRows.split(" ")[0]) + rowGap;
+        
+    //     const _x = x * columnWidth;
+    //     const _x2 = ((x+1) * columnWidth) - columnGap;
+    //     const _y = y * rowHeight;
+    //     const _y2 = ((y+1) * rowHeight) - rowGap;
+
+    //     return {x_start:_x, y_start:_y, x_end: _x2, y_end: _y2, width: columnWidth, height: rowHeight};
+    // }
+    const generatePath = (ship, x, y) => {
+        //TODO: add collision detection
+        let path = [];
+        let currentX = parseInt(ship.getAttribute("x"));
+        let currentY = parseInt(ship.getAttribute("y"));
+        path.push({dx:0, dy:0, x:currentX, y:currentY})
+        while(currentX != x || currentY != y) {
+            let [dx, dy] = [0, 0];
+            if (currentX < x) {
+                dx =  1;
+            } else if (currentX > x) {
+                dx = -1;
+            }
+            if (currentY < y) {
+                dy =  1;
+            } else if(currentY > y) {
+                dy = -1;
+            }
+            currentX += dx, currentY += dy;
+            path.push({dx:dx, dy:dy, x:currentX, y:currentY});
+        }
+        return path;
+    }
+
+    battlefield.addEventListener("click", (e) => {
+        // select ship
+        // console.log(e)
+        let selectedShip = null;
+        let lastCoords = [];
+        const highlightPath = (path) => {
+            let clip_path = "polygon(";
+            let clip_path_end = ")";
+            let path_ends = [];
+
+            for (let i=0, j = 1; i < path.length; i++, j++) {
+                // set rigel-battlefield clip-path
+
+                // calculate the start and end corner
+                let start_corner = [0, 0], end_corner = [0, 0];
+                if(j < path.length){
+                    if(path[j].x == 1) {
+                        //to right
+                        if(path[j].y == 1) {
+                            //to bottom-right corner
+                            // end at bottom right
+                            end_corner = [1, 1];
+                        } else if (path[j].y == 0) {
+                            //to right side
+                            //end at top right
+                            end_corner = [1, 0];
+                        } else if (path[j].y == -1) {
+                            //to top-right corner
+                            //end at top right
+                            end_corner = [1, 0];
+                        }
+                    } else if (path[j].x == 0) {
+                        //no direction
+                        if(path[j].y == 1) {
+                            //to bottom
+                            // end at bottom left
+                            end_corner = [0, 1];
+                        } else if (path[j].y == 0) {
+                            //to centre
+                            // end at top left
+                            end_corner = [0, 0];
+                        } else if (path[j].y == -1) {
+                            //to top
+                            // end at top left
+                            end_corner = [0, 0];
+                        }
+                    } else if (path[j].x == -1) {
+                        //to left
+                        if(path[j].y == 1) {
+                            //to bottom-left
+                            // end at bottom left
+                            end_corner = [0, 1]
+                        } else if (path[j].y == 0) {
+                            //to left
+                            // end at top left
+                            end_corner = [0, 0]
+                        } else if (path[j].y == -1) {
+                            //to top-left
+                            // end at top left
+                            end_corner = [0, 0]
+                        }
+                    }
+                }
+                if(path[i].x == 1) {
+                    //from left
+                    if(path[i].y == 1) {
+                        //from top-left corner
+                        //start at top-left
+                        start_corner = [0, 0];
+                    } else if (path[i].y == 0) {
+                        //from left side
+                        //start at top-left
+                        start_corner = [0, 0];
+                    } else if (path[i].y == -1) {
+                        //from bottom-left corner
+                        //start at bottom left
+                        start_corner = [0, 1];
+                    }
+                } else if (path[i].x == 0) {
+                    //no direction
+                    if(path[i].y == 1) {
+                        //from top
+                        // start at top left
+                        start_corner = [0, 0];
+                    } else if (path[i].y == 0) {
+                        //from centre
+                        //start at top left
+                        start_corner = [0, 0];
+                    } else if (path[i].y == -1) {
+                        //from bottom
+                        //start at bottom left
+                        start_corner = [0, 1];
+                    }
+                } else if (path[i].x == 1) {
+                    //from right
+                    if(path[i].y == 1) {
+                        //from top-right
+                        //start at top right
+                        start_corner = [1, 0];
+                    } else if (path[i].y == 0) {
+                        //from right
+                        // start at top right
+                        start_corner = [1, 0];
+                    } else if (path[i].y == -1) {
+                        //from bottom-right
+                        //start at bottom right
+                        start_corner = [1, 1];
+                    }
+                }
+
+                // calculate the order all four corners should be visited
+                let local_clip_path = [];
+                let reverse_clip_path = [];
+                if(equalArrays(start_corner, [0, 0])) {
+                    if(equalArrays(end_corner, [0, 0]))
+                        local_clip_path.push([0, 0], [0, 1], [1, 1], [1, 0], [0, 0]), reverse_clip_path.push([0, 0], [0, 1], [1, 1], [1, 0], [0, 0]);
+                    else if(equalArrays(end_corner, [0, 1]))
+                        local_clip_path.push([0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1]), reverse_clip_path.push([1, 1], [1, 0], [0, 0]);
+                    else if(equalArrays(end_corner, [1, 0]))
+                        local_clip_path.push([0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0]), reverse_clip_path.push([0, 0]);
+                    else if(equalArrays(end_corner, [1, 1]))
+                        local_clip_path.push([0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1]), reverse_clip_path.push([1, 0], [0, 0]);
+                } else if(equalArrays(start_corner, [0, 1])) {
+                    if(equalArrays(end_corner, [0, 1]))
+                        local_clip_path.push([0, 1], [1, 1], [1, 0], [0, 0], [0, 1]), reverse_clip_path.push([0, 1], [1, 1], [1, 0], [0, 0], [0, 1]);
+                    else if(equalArrays(end_corner, [0, 0]))
+                        local_clip_path.push([0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0]), reverse_clip_path.push([0, 1]);
+                    else if(equalArrays(end_corner, [1, 0]))
+                        local_clip_path.push([0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0]), reverse_clip_path.push([0, 0], [0, 1]);
+                    else if(equalArrays(end_corner, [1, 1]))
+                        local_clip_path.push([0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1]), reverse_clip_path.push([1, 0], [0, 0], [0, 1]);
+                } else if(equalArrays(start_corner, [1, 1])) {
+                    if(equalArrays(end_corner, [1, 1]))
+                        local_clip_path.push([1, 1], [1, 0], [0, 0], [0, 1], [1, 1]), reverse_clip_path.push([1, 1], [1, 0], [0, 0], [0, 1], [1, 1]);
+                    else if(equalArrays(end_corner, [0, 0]))
+                        local_clip_path.push([1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0]), reverse_clip_path.push([0, 1], [1, 1]);
+                    else if(equalArrays(end_corner, [1, 0]))
+                        local_clip_path.push([1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0]), reverse_clip_path.push([0, 0], [0, 1], [1, 1]);
+                    else if(equalArrays(end_corner, [0, 1]))
+                        local_clip_path.push([1, 1], [1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1]), reverse_clip_path.push([1, 1]);
+                } else if(equalArrays(start_corner, [1, 0])) {
+                    if(equalArrays(end_corner, [1, 0]))
+                        local_clip_path.push([1, 0], [0, 0], [0, 1], [1, 1], [1, 0]), reverse_clip_path.push([1, 0], [0, 0], [0, 1], [1, 1], [1, 0]);
+                    else if(equalArrays(end_corner, [0, 0]))
+                        local_clip_path.push([1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0]), reverse_clip_path.push([0, 1], [1, 1], [1, 0]);
+                    else if(equalArrays(end_corner, [0, 1]))
+                        local_clip_path.push([1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1]), reverse_clip_path.push([1, 1], [1, 0]);
+                    else if(equalArrays(end_corner, [1, 1]))
+                        local_clip_path.push([1, 0], [0, 0], [0, 1], [1, 1], [1, 0], [0, 0], [0, 1], [1, 1]), reverse_clip_path.push([1, 0]);
+                }
+                // convert local_clip_path to usable coordinates and add to the global clip_path
+                const path_to_string = (acc, current) => {
+                    let frToPercent = {
+                        x : 100.0 / style.getPropertyValue("--grid-width"),
+                        y : 100.0 / style.getPropertyValue("--grid-height") 
+                    };
+                    return acc + (path[i].x + current[0]) * frToPercent.x + "% " + (path[i].y + current[1]) * frToPercent.y + "%, ";
+                }
+                clip_path += local_clip_path.reduce(path_to_string, "");
+                path_ends.push(reverse_clip_path.reduce(path_to_string, ""));
+                
+            }
+            //add path back to start of polygon
+            for (let i = path_ends.length-1; i >= 0; i--) clip_path += path_ends[i];
+            //remove trailing ", "
+            clip_path = clip_path.substring(0, clip_path.length-2);
+            // close brackets
+            clip_path += clip_path_end;
+
+            afterBattlefield.style.clipPath = clip_path;
+        }
+        const highlightPathToMouse = (e) => {
+            const [x, y] = getGridCoords(e);
+            if(equalArrays([x, y], lastCoords))
+                return;
+            lastCoords = [x, y];
+            //highlight path of grid cells
+            const path = generatePath(selectedShip, x, y);
+            highlightPath(path);
+        }
+        const selectDestination = (e) => {
+            const [x, y] = getGridCoords(e);
+            const path = generatePath(selectedShip, x, y);
+            let currentStep = {x:0, y:0}
+            const takeNextStep = () => {
+                if(path.length > 0) {
+                    const step = path.shift();
+                    currentStep.x = step.x, currentStep.y = step.y;
+                    console.log(step);
+                    // up, left, down, right
+                    // ["-top", "", "-bottom"].forEach(vertical => {
+                    //     ["-left", "", "-right"].forEach(horizontal => {
+                    //         selectedShip.classList.remove("move"+vertical+horizontal);
+                    //     });
+                    // });
+                    let move = "move";
+                    if(step.dy == 1) move += "-bottom";
+                    if(step.dy == -1) move += "-top";
+                    if(step.dx == 1) move += "-right";
+                    if(step.dx == -1) move += "-left";
+                    selectedShip.classList.add(move);
+
+                    // highlightPath(path);                
+                }
+            }
+            const animationstep = (e) => {
+                console.log(e, currentStep);
+                // horizontal movement
+                selectedShip.setAttribute("x", currentStep.x);
+                // horizontal movement
+                selectedShip.setAttribute("y", currentStep.y);
+                // reset for next
+                ["-top", "", "-bottom"].forEach(vertical => {
+                    ["-left", "", "-right"].forEach(horizontal => {
+                        selectedShip.classList.remove("move"+vertical+horizontal);
+                    });
+                });
+                if(path.length > 0) {
+                    takeNextStep();
+                } else {
+                    selectedShip.removeEventListener("animationiteration", animationstep);
+                    afterBattlefield.style.clipPath = "polygon(0% 0%)";
+                }
+            }
+            selectedShip.addEventListener("animationiteration", animationstep);
+            path.shift();
+            takeNextStep();
+            battlefield.removeEventListener("mousemove", highlightPathToMouse);
+            battlefield.removeEventListener("click", selectDestination);
+        }
+
+        if(e.target.tagName.toUpperCase() == "RIGEL-BATTLEFIELD") {
+            // select destination
+            battlefield.querySelectorAll(".selected").forEach((ship) => {
+                ship.classList.remove("selected");
+            });
+        } else {
+            battlefield.querySelectorAll(".selected").forEach((ship) => {
+                ship.classList.remove("selected");
+            });
+            if(e.target.tagName.toUpperCase() == "SHIP-DISPLAY") {
+                //TODO: deselect a ship. attack a different ship.
+                // eg: if selectedShip == null
+                ship = e.target;
+                ship.classList.add("selected");
+                selectedShip = ship;
+                battlefield.addEventListener("mousemove", highlightPathToMouse);
+                battlefield.addEventListener("click", selectDestination);
+            }
+        }
+        // select destination/display path
+    });
+    //populate defending-fleet, populate attacking-fleet
+    populateBattleFleets(battlefield.getAttribute("defending-fleet"), battlefield.getAttribute("attacking-fleet"));
     
+
 }
 function addMenuListeners() {
     const menu = document.querySelector("rigel-menu.pause-menu");
@@ -169,6 +487,7 @@ function moveStarfield(e) {
 }
 
 function setStarsystemOffsets() {
+    // TODO: restructure Starfield into grid
     const starfield = document.querySelector('rigel-starfield');
     const starsystems = starfield.querySelectorAll('rigel-starsystem')
     for (const starsystem of starsystems) {
@@ -194,6 +513,7 @@ function displayPlanetDetails() {
         const allProduction = planetDetailsPanel.querySelectorAll(".production>div");
         name.innerHTML = selectedSystem.getAttribute("name");
         console.log(population, bases, production);
+        //TODO: set star icon colour.
         //TODO: select planet image.
 
         habitability.querySelector(".habitability").innerHTML = selectedSystem.getAttribute("habitability");
@@ -294,8 +614,8 @@ function populateShipCarousel() {
     const carousel = document.querySelector("ship-carousel");
     const ship_specs = player.querySelectorAll("ship-spec");
     const ship_count = ship_specs.length;
-    test = carousel;
-    while(carousel.lastChild != null){
+
+    while(carousel.lastChild != null) {
         carousel.removeChild(carousel.lastChild);
     };
     for (const spec of ship_specs) {
@@ -483,7 +803,45 @@ function newGame(size = 24, difficulty = "simple", opponents = 1) {
 
     // --- randomly choose opponents ---
     // --- set ai level ---
+}
 
+function populateBattleFleets(defendingFleetID, attackingFleetID) {
+    let processShip = (i, fleet, left) => {
+        const battlefield = document.querySelector("rigel-battlefield");
+
+        const ship = fleet.children[i];
+        const shipDisplay = document.createElement("ship-display");
+        //<ship-display x="0" y="0" owner="human" type="0" health="10" size="behemoth" count="10"></ship-display>
+        shipDisplay.setAttribute("x", left?"0":"9");
+        shipDisplay.setAttribute("y", ""+(3+((i%2)==0?Math.ceil(i/2):-Math.ceil(i/2))));
+        shipDisplay.setAttribute("owner", fleet.getAttribute("owner"));
+        shipDisplay.setAttribute("type", ship.getAttribute("type"));
+
+        //TODO: calculate health
+        let health = 100; 
+        shipDisplay.setAttribute("health", health);
+        shipDisplay.setAttribute("count", ship.getAttribute("count"));
+        shipDisplay.setAttribute("size", ship.getAttribute("size"));
+        shipDisplay.setAttribute("shape", ship.getAttribute("shape"));
+
+        if(!left) shipDisplay.classList.add("right");
+
+        battlefield.appendChild(shipDisplay);
+    }
+
+    const battlefield = document.querySelector("rigel-battlefield");
+
+    while(battlefield.lastChild != null) battlefield.removeChild(battlefield.lastChild);
+    const defendingFleet = document.querySelector("rigel-fleets>fleet[fleetID='"+defendingFleetID+"']");
+    const attackingFleet = document.querySelector("rigel-fleets>fleet[fleetID='"+attackingFleetID+"']");
+    const attackingFleetLeft = attackingFleet.classList.contains("player");
+
+    for (let i = 0; i < defendingFleet.children.length; i++) {
+        processShip(i, defendingFleet, !attackingFleetLeft);
+    }
+    for (let i = 0; i < attackingFleet.children.length; i++) {
+        processShip(i, attackingFleet,  attackingFleetLeft);
+    }
 }
 
 function getActorFromID(id) {
@@ -502,3 +860,7 @@ function getRndInteger(min, max) {
     // returns random number between min (included) and max (excluded)
     return Math.floor(Math.random() * (max - min) ) + min;
 } 
+
+function equalArrays(a1, a2) {
+    return (a1.length === a2.length) && a1.every((element, i) => element === a2[i]);
+}

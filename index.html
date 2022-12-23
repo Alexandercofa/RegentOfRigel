@@ -10,7 +10,27 @@
     </head>
     <body>
         <rigel-game>
-            <rigel-global-settings max-planet-size="300" >
+            <rigel-global-settings max-planet-size="300" ship-path-width="20px">
+                <rigel-technologies>
+                    <shields>
+                        <tech name="Shield Mk1"></tech>
+                    </shields>
+                    <weapons>
+
+                    </weapons>
+                    <propulsion>
+
+                    </propulsion>
+                    <ecology>
+
+                    </ecology>
+                    <computers>
+
+                    </computers>
+                    <construction>
+
+                    </construction>
+                </rigel-technologies>
             </rigel-global-settings>
             <rigel-races>
                 <race raceID="0" raceName="guardian">
@@ -97,8 +117,8 @@
                 <input type="button" class="tech-button" value="Tech">
                 <input type="button" class="next-turn-button" value="Next Turn">
             </button-bar>
-            <rigel-battlefield class="hidden" planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
-                <ship-display x="0" y="0" owner="human" type="0" health="10" size="behemoth" count="10"></ship-display>
+            <rigel-battlefield planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
+                <ship-display class="right" x="0" y="0" owner="human" type="0" health="10" size="behemoth" shape="guardian" count="10"></ship-display>
             </rigel-battlefield>
             <rigel-menu class="pause-menu hidden">
                 <input type="button" value="Continue"></input>
