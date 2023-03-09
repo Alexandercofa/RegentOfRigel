@@ -16,7 +16,7 @@ By default, there are six categories of technology, each of which can be researc
 </rigel-technologies>
 ```
 
-This should work if you define different numbers of categories than six.
+This should still work if you define different numbers of categories than six.
 
 Modifying the primary tech tree should be done before a game is started to avoid glitches, as all references to tech will refer to the primary tech tree - modifying the tree can therefore cause players to have different technologies available, or potentially to have a reference to nothing, which may cause undefined behaviour.
 
@@ -28,7 +28,7 @@ The behaviour of a tech is defined by the attributes of the `<tech>` tag. All te
 For some attributes, I give recommended positions that they should be placed in within the html tag. Obviously there is no enforcement of these recommendations, but keeping the rules consistant will help people to comprehend these 
 
 ### `name="<string>"`
-The tech name. For consistancy with the rest of the game, please capitalise new words, except where hyphonated, e.g.: `name="Tri-barrelled Quantum Cannon"`
+The tech name. Use Title case where possible (i.e. "Tri-Focussed Plasma Cannon" rather than "Tri-focussed plasma Cannon")
 
 Recommended location: immediately after the tech-level, if using. 
 For example, either: 
@@ -40,7 +40,7 @@ or
 `<tech name="example tech" ...>`
 
 ### `tech-level="<number>"`
-The tech tree for each civilisation is randomised on game start. Each technology has a 50% chance to be removed, with few exceptions.
+The tech tree for each civilisation is randomised on game start. Each technology has a 50% chance to be removed from a civilisation's tech tree, with few exceptions.
 
 When generating individual tech trees, the primary tech tree is split up into blocks of technologies within their categories based on their tech-level. These blocks contain 5 tech-levels each (except for the first, because `tech-level="1"` is a special case). The tech levels are 2-5, 6-10, 11-15, etc. 
 
