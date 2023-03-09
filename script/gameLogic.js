@@ -104,6 +104,8 @@ function addStarfieldListeners() {
 
 }
 function addBattlefieldListeners() {
+    //TODO: loadFleet(fleetID)
+    //TODO: handle attacks, lock opponent ships, deselect current ship when selecting self or allied ship as destinations
     const battlefield = document.querySelector("rigel-battlefield");
     const css = document.styleSheets[0].cssRules;
     let afterBattlefield = null;
@@ -166,6 +168,7 @@ function addBattlefieldListeners() {
         let selectedShip = null;
         let lastCoords = [];
         const highlightPath = (path) => {
+            //TODO: fix error going up-left from either 2, 2 or 2, 1
             let clip_path = "polygon(";
             let clip_path_end = ")";
             let path_ends = [];
@@ -401,7 +404,8 @@ function addBattlefieldListeners() {
                 ship.classList.remove("selected");
             });
             if(e.target.tagName.toUpperCase() == "SHIP-DISPLAY") {
-                //TODO: deselect a ship. attack a different ship.
+                //TODO: deselect a ship.
+                //TODO: attack a different ship.
                 // eg: if selectedShip == null
                 ship = e.target;
                 ship.classList.add("selected");

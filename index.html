@@ -10,26 +10,209 @@
     </head>
     <body>
         <rigel-game>
-            <rigel-global-settings max-planet-size="300" ship-path-width="20px">
+            <rigel-global-settings ship-path-width="20px">
                 <rigel-technologies>
-                    <shields>
-                        <tech name="Shield Mk1"></tech>
-                    </shields>
-                    <weapons>
-
-                    </weapons>
-                    <propulsion>
-
-                    </propulsion>
-                    <ecology>
-
-                    </ecology>
-                    <computers>
-
-                    </computers>
-                    <construction>
-
-                    </construction>
+                    <tech-category name="shields">
+                        <tech tech-level="1" name="Deflector Shield Mk1" shield defense-bonus="1"></tech>
+                        <tech tech-level="4" name="Deflector Shield Mk2" shield defense-bonus="2"></tech>
+                        <tech tech-level="8" name="Personal Deflector Shield" ground-combat-shield="10"></tech>
+                        <tech tech-level="10" name="Deflector Shield Mk3" shield defense-bonus="3"></tech>
+                        <tech tech-level="12" name="Planetary Deflector Shield Mk5" planetary-shield="5"></tech>
+                        <tech tech-level="14" name="Deflector Shield Mk4" shield defense-bonus="4"></tech>
+                        <tech tech-level="16" name="Repulsor Beam" special repulsor-beam-effect="1" cost="550" size="100" power="200"></tech>
+                        <tech tech-level="20" name="Deflector Shield Mk5" shield defense-bonus="5"></tech>
+                        <tech tech-level="21" name="Personal Deflector Shield Mk20" ground-combat-shield="20"></tech>
+                        <tech tech-level="22" name="Planetary Deflector Shield Mk10" planetary-shield="10"></tech>
+                        <tech tech-level="24" name="Deflector Shield Mk6" shield defense-bonus="6"></tech>
+                        <tech tech-level="27" name="Cloaking Device" special cloaking-device cost="30 150 750 3750" size="5 25 120 600" power="10 50 250 1250"></tech>
+                        <tech tech-level="30" name="Deflector Shield Mk7" shield defense-bonus="7"></tech>
+                        <tech tech-level="31" name="Zyro Shield" special anti-missile-percent="75" cost="50 100 200 300" size="4 20 100 500" power="12 60 300 1500"></tech>
+                        <tech tech-level="32" name="Planetary Deflector Shield Mk15" planetary-shield="15"></tech>
+                        <tech tech-level="34" name="Deflector Shield Mk9" shield defense-bonus="9"></tech>
+                        <tech tech-level="37" name="Stasis Field" special banish-ship-turns="1" cost="2500" size="200" power="275"></tech>
+                        <tech tech-level="38" name="Personal Barrier Shield" ground-combat-shield="30"></tech>
+                        <tech tech-level="40" name="Deflector Shield Mk11" shield defense-bonus="11"></tech>
+                        <tech tech-level="42" name="Planetary Deflector Shield Mk20" planetary-shield="20"></tech>
+                        <tech tech-level="43" name="Black Hole Generator" special instant-death-percent-range="25 100" cost="2750" size="750" power="750"></tech>
+                        <tech tech-level="44" name="Deflector Shield Mk13" shield defense-bonus="13"></tech>
+                        <tech tech-level="46" name="Lightning Shield" special anti-missile-percent="100" cost="200 300 400 500" size="6 30 150 750" power="15 70 350 1750"></tech>
+                        <tech tech-level="50" name="Deflector Shield Mk15" shield defense-bonus="15"></tech>
+                    </tech-category>
+                    <tech-category name="weapons">
+                        <tech tech-level="1" name="Nuclear Bomb" bomb min-damage="3" max-damage="12" missile-ammo="10" cost="30" size="40" power="10"></tech>
+                        <tech tech-level="1" name="Laser" weapon min-damage="1" max-damage="4" cost="30" size="10" power="25"><sub-tech name="Heavy Laser" weapon min-damage="1" max-damage="7" range="2" cost="90" size="30" power="75"></sub-tech></tech>
+                        <tech tech-level="1" name="Nuclear Missile" missile min-damage="4" max-damage="4" range="6" missile-fuel="2" missile-speed="96" missile-ammo="2" cost="70" size="50" power="20"><sub-tech name="Nuclear Missile" missile min-damage="4" max-damage="4" range="4" missile-fuel="2" missile-speed="64" missile-ammo="5" cost="105" size="75" power="30"></sub-tech></tech>
+                        <tech tech-level="4" name="Hyper-V Rocket" missile min-damage="6" max-damage="6" range="7" missile-fuel="2" missile-speed="112" missile-ammo="2" cost="90" size="70" power="20"><sub-tech name="Hyper-V Rocket" missile min-damage="6" max-damage="6" range="5" missile-fuel="2" missile-speed="80" missile-ammo="5" cost="135" size="105" power="30"></sub-tech></tech>
+                        <tech tech-level="5" name="Gatling Laser" weapon min-damage="1" max-damage="4" multi-shot="4" cost="90" size="20" power="70"></tech>
+                        <tech tech-level="7" name="Neutron Pellet Gun" piercing min-damage="2" max-damage="5" cost="30" size="15" power="25"></tech>
+                        <tech tech-level="8" name="Hyper-X Rocket" missile min-damage="8" max-damage="8" range="7" missile-fuel="2" missile-speed="96" attack-bonus="1" missile-ammo="2" cost="120" size="100" power="20"><sub-tech name="Hyper-X Rocket" missile min-damage="8" max-damage="8" range="5" missile-fuel="2" missile-speed="80" attack-bonus="1" missile-ammo="5" cost="180" size="150" power="30"></sub-tech></tech>
+                        <tech tech-level="9" name="Fusion Bomb" bomb min-damage="5" max-damage="20" missile-ammo="10" cost="30" size="50" power="10"></tech>
+                        <tech tech-level="10" name="Ion Cannon" weapon min-damage="3" max-damage="8" cost="40" size="15" power="35"><sub-tech name="Heavy Ion Cannon" weapon min-damage="3" max-damage="15" range="2" cost="110" size="45" power="105"></sub-tech></tech>
+                        <tech tech-level="11" name="Scatter Pack V" missile min-damage="6" max-damage="6" range="7" missile-fuel="2" missile-speed="96" split-into-missiles="5" attack-bonus="1" missile-ammo="2" cost="180" size="115" power="50"><sub-tech name="Scatter Pack V" missile min-damage="6" max-damage="6" range="5" missile-fuel="2" missile-speed="80" split-into-missiles="5" attack-bonus="1" missile-ammo="5" cost="270" size="170" power="80"></sub-tech></tech>
+                        <tech tech-level="10" name="Death Spores" bomb bio-weapon min-damage="1" max-damage="1" missile-ammo="5" cost="100" size="100" power="10"></tech>
+                        <tech tech-level="13" name="Mass Driver" piercing min-damage="5" max-damage="8" cost="90" size="55" power="50"></tech>
+                        <tech tech-level="14" name="Merculite Missile" missile min-damage="10" max-damage="10" range="8" missile-fuel="2" missile-speed="128" attack-bonus="2" missile-ammo="2" cost="130" size="105" power="20"><sub-tech name="Merculite Missile" missile min-damage="10" max-damage="10" range="6" missile-fuel="2" missile-speed="96" attack-bonus="2" missile-ammo="5" cost="195" size="155" power="30"></sub-tech></tech>
+                        <tech tech-level="15" name="Neutron Blaster" weapon min-damage="3" max-damage="12" cost="60" size="20" power="60"></tech>
+                        <tech tech-level="15" name="Heavy Blast Cannon" weapon min-damage="3" max-damage="24" range="2" cost="180" size="60" power="180"></tech>
+                        <tech tech-level="16" name="Anti-Matter Bomb" bomb min-damage="10" max-damage="40" missile-ammo="10" cost="50" size="75" power="10"></tech>
+                        <tech tech-level="17" name="Graviton Beam" weapon min-damage="1" max-damage="15" cost="60" size="20" power="50"></tech>
+                        <tech tech-level="18" name="Stinger Missle" missile min-damage="15" max-damage="15" range="9" missile-fuel="2" missile-speed="144" attack-bonus="3" missile-ammo="2" cost="190" size="155" power="30"><sub-tech name="Stinger Missle" missile min-damage="15" max-damage="15" range="7" missile-fuel="2" missile-speed="112" attack-bonus="3" missile-ammo="5" cost="270" size="230" power="45"></sub-tech></tech>
+                        <tech tech-level="19" name="Hard Beam" piercing min-damage="8" max-damage="12" cost="120" size="50" power="100"></tech>
+                        <tech tech-level="20" name="Fusion Beam" weapon min-damage="4" max-damage="16" cost="70" size="20" power="75"><sub-tech name="Heavy Fusion Beam" weapon min-damage="4" max-damage="30" range="2" cost="210" size="60" power="225"></sub-tech></tech>
+                        <tech tech-level="22" name="Omega-V Bomb" bomb min-damage="20" max-damage="50" missile-ammo="10" cost="80" size="140" power="10"></tech>
+                        <tech tech-level="23" name="Anti-Matter Torpedo" missile min-damage="30" max-damage="30" range="8" missile-fuel="2" missile-speed="128" attack-bonus="4" torpedo-type="1" cost="300" size="75" power="300"></tech>
+                        <tech tech-level="25" name="Megabolt Cannon" weapon min-damage="2" max-damage="20" attack-bonus="3" cost="80" size="30" power="65"></tech>
+                        <tech tech-level="26" name="Phasor" weapon min-damage="5" max-damage="20" cost="90" size="20" power="90"><sub-tech name="Heavy Phasor" weapon min-damage="5" max-damage="40" range="2" cost="260" size="60" power="270"></sub-tech></tech>
+                        <tech tech-level="27" name="Scatter Pack VII" missile min-damage="10" max-damage="10" range="8" missile-fuel="2" missile-speed="128" split-into-missiles="7" attack-bonus="2" missile-ammo="2" cost="280" size="170" power="50"><sub-tech name="Scatter Pack VII" missile min-damage="10" max-damage="10" range="6" missile-fuel="2" missile-speed="96" split-into-missiles="7" attack-bonus="2" missile-ammo="5" cost="420" size="230" power="80"></sub-tech></tech>
+                        <tech tech-level="27" name="Doom Virus" bomb bio-weapon min-damage="2" max-damage="2" missile-ammo="5" cost="150" size="200" power="10"></tech>
+                        <tech tech-level="28" name="Auto Blaster" weapon min-damage="4" max-damage="16" multi-shot="3" cost="140" size="30" power="90"></tech>
+                        <tech tech-level="29" name="Pulson Missle" missile min-damage="20" max-damage="20" range="10" missile-fuel="2" attack-bonus="4" missile-ammo="2" cost="200" size="160" power="40"><sub-tech name="Pulson Missle" missile min-damage="20" max-damage="20" range="8" missile-fuel="2" missile-speed="128" attack-bonus="4" missile-ammo="5" cost="300" size="240" power="60"></sub-tech></tech>
+                        <tech tech-level="30" name="Tachyon Beam" weapon min-damage="1" max-damage="25" cost="90" size="30" power="70"></tech>
+                        <tech tech-level="32" name="Gauss Autocanon" piercing min-damage="7" max-damage="10" multi-shot="4" cost="280" size="105" power="105"></tech>
+                        <tech tech-level="33" name="Particle Beam" piercing min-damage="10" max-damage="20" cost="150" size="90" power="75"></tech>
+                        <tech tech-level="34" name="Hercular Missile" missile min-damage="25" max-damage="25" range="10" missile-fuel="2" attack-bonus="5" missile-ammo="2" cost="260" size="220" power="40"><sub-tech name="Hercular Missile" missile min-damage="25" max-damage="25" range="9" missile-fuel="2" missile-speed="144" attack-bonus="5" missile-ammo="5" cost="390" size="330" power="60"></sub-tech></tech>
+                        <tech tech-level="35" name="Plasma Cannon" weapon min-damage="6" max-damage="30" cost="120" size="30" power="100"></tech>
+                        <tech tech-level="37" name="Disruptor" weapon min-damage="10" max-damage="40" range="2" cost="210" size="70" power="160"></tech>
+                        <tech tech-level="38" name="Pulse Phasor" weapon min-damage="5" max-damage="20" multi-shot="3" cost="250" size="40" power="120"></tech>
+                        <tech tech-level="39" name="Neutronium Bomb" bomb min-damage="40" max-damage="70" missile-ammo="10" cost="90" size="200" power="10"></tech>
+                        <tech tech-level="40" name="Bio Terminator" bomb bio-weapon min-damage="3" max-damage="3" missile-ammo="5" cost="200" size="300" power="10"></tech>
+                        <tech tech-level="40" name="Hellfire Torpedo" weapon min-damage="25" max-damage="25" range="10" attack-bonus="6" torpedo-type="2" damage-mult="4" cost="500" size="150" power="350"></tech>
+                        <tech tech-level="41" name="Zeon Missile" missile min-damage="30" max-damage="30" range="9" missile-fuel="2" attack-bonus="6" missile-ammo="2" cost="300" size="250" power="50"><sub-tech name="Zeon Missile" missile min-damage="30" max-damage="30" range="7" missile-fuel="2" attack-bonus="6" missile-ammo="5" cost="450" size="375" power="75"></sub-tech></tech>
+                        <tech tech-level="43" name="Proton Torpedo" weapon min-damage="75" max-damage="75" range="10" attack-bonus="6" torpedo-type="3" cost="500" size="100" power="400"></tech>
+                        <tech tech-level="44" name="Scatter Pack X" missile min-damage="15" max-damage="15" range="10" missile-fuel="2" missile-speed="144" split-into-missiles="10" attack-bonus="3" missile-ammo="2" cost="300" size="250" power="50"><sub-tech name="Scatter Pack X" missile min-damage="15" max-damage="15" range="10" missile-fuel="2" missile-speed="112" split-into-missiles="10" attack-bonus="3" missile-ammo="5" cost="450" size="420" power="80"></sub-tech></tech>
+                        <tech tech-level="45" name="Tri-Focus Plasma" weapon min-damage="20" max-damage="50" cost="250" size="70" power="180"></tech>
+                        <tech tech-level="46" name="Stellar Converter" weapon min-damage="10" max-damage="35" range="3" damage-mult="4" cost="500" size="200" power="300"></tech>
+                        <tech tech-level="48" name="Mauler Device" weapon min-damage="20" max-damage="100" cost="550" size="150" power="300"></tech>
+                        <tech tech-level="50" name="Plasma Torpedo" weapon min-damage="150" max-damage="150" range="10" attack-bonus="7" damage-reduction-per-space="15" torpedo-type="4" cost="600" size="150" power="450"></tech>
+                        <tech tech-level="101" name="Crystal Ray" not-in-tree min-damage="100" max-damage="300" range="3" missile-fuel="3" damage-mult="4" cost="600" size="200" power="400"></tech>
+                        <tech tech-level="36" name="Death Ray" not-in-tree min-damage="200" max-damage="1000" missile-fuel="4" cost="1000" size="2000" power="2000"></tech>
+                        <tech tech-level="101" name="Ameoba Stream" not-in-tree missile min-damage="250" max-damage="1000" range="3" missile-fuel="2" missile-speed="70" cost="600" size="200" power="400"></tech>
+                    </tech-category>
+                    <tech-category name="propulsion">
+                        <tech tech-level="1" name="Retro Engines" engine travel-speed="1" transport-speed="1" max-movement-speed="1" power="10" size="10" cost="20"><sub-tech name="Basic Fuel Cells" max-travel-distance="3"></sub-tech></tech>
+                        <tech tech-level="2" name="Hydrogen Fuel Cells" max-travel-distance="4"></tech>
+                        <tech tech-level="5" name="Deuterium Fuel Cells" max-travel-distance="5"></tech>
+                        <tech tech-level="6" name="Nuclear Engines" engine travel-speed="2" max-movement-speed="2" power="20" size="18" cost="40"></tech>
+                        <tech tech-level="9" name="Irridium Fuel Cells" max-travel-distance="6"></tech>
+                        <tech tech-level="10" name="Inertial Stabilizer" special defense-bonus="2" movement-speed-bonus="1" cost="20 75 500 2700" size="4 20 100 500" power="8 40 200 1000"></tech>
+                        <tech tech-level="12" name="Sub Light Drives" engine travel-speed="3" transport-speed="2" max-movement-speed="2" power="30" size="26" cost="60"></tech>
+                        <tech tech-level="14" name="Dotomite Crystals" max-travel-distance="7"></tech>
+                        <tech tech-level="16" name="Energy Pulsar" special pulse-attack-damage-min="5" cost="750" size="150" power="250"></tech>
+                        <tech tech-level="18" name="Fusion Drives" engine travel-speed="4" transport-speed="3" max-movement-speed="3" power="40" size="33" cost="80"></tech>
+                        <tech tech-level="19" name="Uridium Fuel Cells" max-travel-distance="8"></tech>
+                        <tech tech-level="20" name="Warp Dissipator" special target-speed-reduction-min="0" target-speed-reduction-max="1" cost="650" size="100" power="300"></tech>
+                        <tech tech-level="23" name="Reajax II Fuel Cells" max-travel-distance="9"></tech>
+                        <tech tech-level="24" name="Impulse Drives" engine travel-speed="5" transport-speed="4" max-movement-speed="3" power="50" size="36" cost="100"></tech>
+                        <tech tech-level="27" name="Intergalactic Star Gates" star-gate></tech>
+                        <tech tech-level="29" name="Trilithium Crystals" max-travel-distance="10"></tech>
+                        <tech tech-level="30" name="Ion Drives" engine travel-speed="6" transport-speed="5" max-movement-speed="4" power="60" size="40" cost="120"></tech>
+                        <tech tech-level="34" name="High Energy Focus" special weapon-range-bonus="3" cost="30 135 625 3500" size="35 100 150 500" power="65 200 350 1000"></tech>
+                        <tech tech-level="36" name="Anti-matter Drives" engine travel-speed="7" transport-speed="6" max-movement-speed="4" power="70" size="44" cost="140"></tech>
+                        <tech tech-level="38" name="Sub Space Teleporter" special teleporter cost="25 100 450 2250" size="4 20 100 500" power="16 80 400 2000"></tech>
+                        <tech tech-level="40" name="Ionic Pulsar" special pulse-attack-damage-min="10" cost="1500" size="400" power="750"></tech>
+                        <tech tech-level="41" name="Thorium Cells" max-travel-distance="Infinity"></tech>
+                        <tech tech-level="42" name="Inter-phased Drives" engine travel-speed="8" transport-speed="7" max-movement-speed="5" power="80" size="47" cost="160"></tech>
+                        <tech tech-level="43" name="Sub Space Interdictor" block-teleporters></tech>
+                        <tech tech-level="45" name="Combat Teleporters" ground-combat-teleporter-percent="50"></tech>
+                        <tech tech-level="46" name="Innertial Nullifier" special defense-bonus="4" movement-speed-bonus="2" cost="60 200 1500 5000" size="6 30 150 750" power="12 60 300 1500"></tech>
+                        <tech tech-level="48" name="Hyper Drives" engine travel-speed="9" transport-speed="8" max-movement-speed="5" power="90" size="50" cost="180"></tech>
+                        <tech tech-level="50" name="Displacement Device" special dodge-attack-percent="33" cost="30 150 300 2750" size="10 50 225 1250" power="10 50 225 1250"></tech>
+                    </tech-category>
+                    <tech-category name="ecology">
+                        <tech tech-level="1" name="Ecological Restoration" ecological-recovery="2"><sub-tech name="Colony Base" special min-habitat="Minimal" cost="3500" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="2" name="Terraforming +10" terraform-level="10" cost="50"></tech>
+                        <tech tech-level="3" name="Controlled Barren Environment"><sub-tech name="Barren Colony Base" special min-habitat="Barren" cost="3750" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="5" name="Improved Ecological Restoration" ecological-recovery="3"></tech>
+                        <tech tech-level="6" name="Controlled Tundra Environment"><sub-tech name="Tundra Colony Base" special min-habitat="Tundra" cost="4000" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="8" name="Terraforming +20" terraforming-level="20" cost="200"></tech>
+                        <tech tech-level="9" name="Controlled Dead Environment"><sub-tech name="Dead Colony Base" special min-habitat="Dead" cost="4250" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="10" name="Death Spores" bomb bio-weapon min-damage="1" ammo-bonus="-5"></tech>
+                        <tech tech-level="12" name="Controlled Inferno Environment"><sub-tech name="Inferno Colony Base" special min-habitat="Inferno" cost="4500" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="13" name="Enhanced Ecological Restoration" ecological-recovery="5"></tech>
+                        <tech tech-level="14" name="Terraforming +30" terraform-level="30" cost="150"></tech>
+                        <tech tech-level="15" name="Controlled Toxic Environment"><sub-tech name="Toxic Colony Base" special min-habitat="Toxic"cost="4750" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="16" name="Soil Enrichment" improve-environment-from="normal" improve-environment-to="Fertile" increase-planet-size-percent="25" cost="150"></tech>
+                        <tech tech-level="17" name="Bio Toxin Antidote" innoculate="1"></tech>
+                        <tech tech-level="18" name="Controlled Radiated Environment"><sub-tech name="Radiated Colony Base" special min-habitat="Radiated" cost="5000" size="700" power="0"></sub-tech></tech>
+                        <tech tech-level="20" name="Terraforming +40" terraforming-level="40" cost="200"></tech>
+                        <tech tech-level="21" name="Cloning" population-cost="10"></tech>
+                        <tech tech-level="22" name="Atmospheric Terraforming" improve-environment-from="hostile" improve-environment-to="Minimal" cost="150"></tech>
+                        <tech tech-level="24" name="Advanced Ecological Restoration" ecological-recovery="10"></tech>
+                        <tech tech-level="26" name="Terraforming +50" terraforming-level="50" cost="250"></tech>
+                        <tech tech-level="27" name="Doom Virus" bomb bio-weapon-min-damage="2" ammo-bonus="-5"></tech>
+                        <tech tech-level="30" name="Advanced Soil Enrichment" improve-environment-from="Fertile normal" improve-environment-to="Paradise" planet-size-mult="1.5"></tech>
+                        <tech tech-level="32" name="Terraforming +60" terraforming-level="60" cost="300"></tech>
+                        <tech tech-level="34" name="Complete Ecological Restoration" ecological-recovery="20"></tech>
+                        <tech tech-level="36" name="Universal Antidote" innoculate="2"></tech>
+                        <tech tech-level="38" name="Terraforming +80" terraforming-level="80" cost="400"></tech>
+                        <tech tech-level="40" name="Bio Terminator" bomb bio-weapon-min-damage="3" ammo-bonus="-5"></tech>
+                        <tech tech-level="42" name="Advanced Cloning" population-cost="5"></tech>
+                        <tech tech-level="44" name="Terraforming +100" terraforming-level="100" cost="500"></tech>
+                        <tech tech-level="50" name="Complete Terraforming" terraforming-level="120" cost="600"></tech>
+                    </tech-category>
+                    <tech-category name="computers">
+                        <tech tech-level="1" name="Robotics Controls 2" factories-per-pop="2"></tech>
+                        <tech tech-level="1" name="Battle Computer Mk1" computer attack-bonus="1" power="5 10 20 100" size="5 10 20 100" cost="40 200 1000 5000"></tech>
+                        <tech tech-level="1" name="Battle Scanner" special scan initiative-bonus="3" attack-bonus="1" cost="300" size="50" power="50"></tech>
+                        <tech tech-level="2" name="ECM Jammer Mk1" ecm defense-bonus="1"></tech>
+                        <tech tech-level="4" name="Deep Space Scanner" ship-detection-range-from-colonies="5" ship-detection-range-from-ships="1"></tech>
+                        <tech tech-level="5" name="Battle Computer Mk2" computer attack-bonus="2" power="7 15 30 150" size="7 15 30 150" cost="50 240 1200 6000"></tech>
+                        <tech tech-level="7" name="ECM Jammer Mk2" ecm defense-bonus="2"></tech>
+                        <tech tech-level="8" name="Improved Robotic Controls 3" factories-per-pop="3"></tech>
+                        <tech tech-level="10" name="Battle Computer Mk3" computer attack-bonus="3" power="10 20 40 200" size="10 20 40 200" cost="60 280 1400 7000"></tech>
+                        <tech tech-level="12" name="ECM Jammer Mk3" ecm defense-bonus="3"></tech>
+                        <tech tech-level="13" name="Improved Space Scanner" detect-ship-destination detect-ship-ETA ship-detection-range-from-colonies="7" ship-detection-range-from-ships="2"></tech>
+                        <tech tech-level="15" name="Battle Computer Mk4" computer attack-bonus="4" power="12 25 50 250" size="12 25 50 250" cost="70 320 1600 8000"></tech>
+                        <tech tech-level="17" name="ECM Jammer Mk4" ecm defense-bonus="4"></tech>
+                        <tech tech-level="18" name="Improved Robotic Controls 4" factories-per-pop="4"></tech>
+                        <tech tech-level="20" name="Battle Computer Mk5" computer attack-bonus="5" power="15 30 60 300" size="15 30 60 300" cost="80 360 1800 9000"></tech>
+                        <tech tech-level="22" name="ECM Jammer Mk5" ecm defense-bonus="5"></tech>
+                        <tech tech-level="23" name="Advanced Space Scanner" detect-ship-destination detect-ship-ETA ship-detection-range-from-colonies="9" ship-detection-range-from-ships="3" scan-planets-range-from-colonies="9"></tech>
+                        <tech tech-level="25" name="Battle Computer Mk6" computer attack-bonus="6" power="17 35 70 350" size="17 35 70 350" cost="90 400 2000 10000"></tech>
+                        <tech tech-level="27" name="ECM Jammer Mk6" ecm defense-bonus="6"></tech>
+                        <tech tech-level="28" name="Improved Robotic Controls 5" factories-per-pop="5"></tech>
+                        <tech tech-level="30" name="Battle Computer Mk7" computer attack-bonus="7" power="20 40 80 400" size="20 40 80 400" cost="100 440 2200 11000"></tech>
+                        <tech tech-level="32" name="ECM Jammer Mk7" ecm defense-bonus="7"></tech>
+                        <tech tech-level="34" name="Hyperspace Communications" communicate-with-fleets-in-transit></tech>
+                        <tech tech-level="35" name="Battle Computer Mk8" computer attack-bonus="8" power="22 45 90 450" size="22 45 90 450" cost="110 480 2400 12000"></tech>
+                        <tech tech-level="37" name="ECM Jammer Mk8" ecm defense-bonus="8"></tech>
+                        <tech tech-level="38" name="Improved Robotic Controls 6" factories-per-pop="6"></tech>
+                        <tech tech-level="40" name="Battle Computer Mk9" computer attack-bonus="9" power="25 50 100 500" size="25 50 100 500" cost="120 520 2600 13000"></tech>
+                        <tech tech-level="42" name="ECM Jammer Mk9" ecm defense-bonus="9"></tech>
+                        <tech tech-level="45" name="Battle Computer Mk10" computer attack-bonus="10" power="27 55 110 550" size="27 55 110 550" cost="130 560 2800 14000"></tech>
+                        <tech tech-level="46" name="Oracle Interface" special give-piercing-to-weapon-type="weapon" cost="30 150 600 2750" size="8 40 200 1000" power="12 60 300 1500"></tech>
+                        <tech tech-level="47" name="ECM Jammer Mk10" ecm defense-bonus="10"></tech>
+                        <tech tech-level="48" name="Improved Robotic Controls 7" factories-per-pop="7"></tech>
+                        <tech tech-level="49" name="Technology Nullifier" special reduce-enemy-attack-min="2" reduce-enemy-attack-max="6" cost="3000" size="1000" ></tech>
+                        <tech tech-level="50" name="Battle Computer Mk11" computer attack-bonus="11" power="30 60 120 600" size="30 60 120 600" cost="140 600 3000 15000"></tech>
+                    </tech-category>
+                    <tech-category name="construction">
+                        <tech tech-level="1" name="Reserve Fuel Tanks" max-travel-distance-bonus="3" power="20 100 500 2500" size="20 100 500 2500" cost="0"><sub-tech name="Titanium" armour-plating cost="0" space="0" armour-base="100" ground-combat-material="0"></sub-tech><sub-tech name="Titanium 2" armour-plating cost="20 100 500 2500" space="20 80 400 2000" armour-base="150"></sub-tech></tech>
+                        <tech tech-level="3" name="Industrial Tech 9" factory-cost="9"></tech>
+                        <tech tech-level="5" name="Reduced Industrial Waste 80%" factory-polution-mult="0.8"></tech>
+                        <tech tech-level="8" name="Industrial Tech 8" factory-cost="8"></tech>
+                        <tech tech-level="10" name="Duralloy Armor"><sub-tech name="Duralloy" armour-plating cost="20 100 600 3000" space="2 10 60 300" armour-base="150" ground-combat-material="5"></sub-tech><sub-tech name="Duralloy 2" armour-plating cost="30 150 900 4500" space="25 85 425 2100" armour-base="225"></sub-tech></tech>
+                        <tech tech-level="11" name="Battle Suits" ground-combat-armour="10"></tech>
+                        <tech tech-level="13" name="Industrial Tech 7" factory-cost="7"></tech>
+                        <tech tech-level="14" name="Automated Repair Unit" special regen-health-percent="15" apply-regen-only-to-first-ship-in-stack cost="2 8 50 300" size="3 15 100 600" power="3 10 50 300"></tech>
+                        <tech tech-level="15" name="Reduced Industrial Waste 60%" factory-polution-mult="0.6"></tech>
+                        <tech tech-level="17" name="Zortium Armor"><sub-tech name="Zortium" armour-plating cost="40 200 1000 5000" space="4 20 100 500" armour-base="200" ground-combat-material="10"></sub-tech><sub-tech name="Zortium 2" armour-plating cost="60 300 1500 7500" space="30 100 500 2500" armour-base="300"></sub-tech></tech>
+                        <tech tech-level="18" name="Industrial Tech 6" factory-cost="6"></tech>
+                        <tech tech-level="23" name="Industrial Tech 5" factory-cost="5"></tech>
+                        <tech tech-level="24" name="Armoured Exoskeleton" ground-combat-armour="20"></tech>
+                        <tech tech-level="25" name="Reduced Industrial Waste 40%" factory-polution-mult="0.4"></tech>
+                        <tech tech-level="26" name="Andrium Armor"><sub-tech name="Andrium" armour-plating cost="60 300 1500 7500" space="6 30 150 750" armour-base="250" ground-combat-material="15"></sub-tech><sub-tech name="Andrium 2" armour-plating cost="90 450 2250 11250" space="35 115 575 2875" armour-base="375"></sub-tech></tech>
+                        <tech tech-level="28" name="Industrial Tech 4" factory-cost="4"></tech>
+                        <tech tech-level="33" name="Industrial Tech 3" factory-cost="3"></tech>
+                        <tech tech-level="34" name="Tritanium Armor"><sub-tech name="Tritanium" armour-plating cost="80 400 2000 10000" space="8 40 200 1000" armour-base="300" ground-combat-material="20"></sub-tech><sub-tech name="Tritanium 2" armour-plating cost="120 600 3000 15000" space="40 130 650 3250" armour-base="450"></sub-tech></tech>
+                        <tech tech-level="35" name="Reduced Industrial Waste 20%" factory-polution-mult="0.2"></tech>
+                        <tech tech-level="36" name="Advanced Damage Control System" special regen-health-percent="30" apply-regen-only-to-first-ship-in-stack cost="40 200 1000 5000" size="9 45 300 1800" power="9 30 150 450"></tech>
+                        <tech tech-level="38" name="Industrial Tech 2" factory-cost="2"></tech>
+                        <tech tech-level="40" name="Powered Armour" ground-combat-armour="30"></tech>
+                        <tech tech-level="42" name="Adamantium Armor"><sub-tech name="Adamantium" armour-plating cost="100 500 2500 12500" space="10 50 250 1250" armour-base="350" ground-combat-material="25"></sub-tech><sub-tech name="Adamantium 2" armour-plating cost="150 750 3750 18750" space="45 150 750 3750" armour-base="525"></sub-tech></tech>
+                        <tech tech-level="45" name="Industrial Waste Elimination" factory-polution-mult="0"></tech>
+                        <tech tech-level="50" name="Neutronium Armor"><sub-tech name="Neutronium" armour-plating cost="120 600 3000 15000" space="12 60 300 1500" armour-base="400" ground-combat-material="30"></sub-tech><sub-tech name="Neutronium 2" armour-plating cost="180 900 4500 25000" space="50 175 875 4375" armour-base="600"></sub-tech></tech>
+                     </tech-category>
                 </rigel-technologies>
             </rigel-global-settings>
             <rigel-races>
@@ -118,7 +301,7 @@
                 <input type="button" class="next-turn-button" value="Next Turn">
             </button-bar>
             <rigel-battlefield planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
-                <ship-display class="right" x="0" y="0" owner="human" type="0" health="10" size="behemoth" shape="guardian" count="10"></ship-display>
+                <ship-display class="right" x="0" y="0" owner="human" type="0" health="10" max-health="10" size="behemoth" shape="guardian" count="10"></ship-display>
             </rigel-battlefield>
             <rigel-menu class="pause-menu hidden">
                 <input type="button" value="Continue"></input>
