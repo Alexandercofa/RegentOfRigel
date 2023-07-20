@@ -5,12 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Regent of Rigel</title>
-        <link rel="stylesheet" href="style.css">
-        <script type="text/javascript" src="script/gameLogic.js"></script>
+        <link rel="stylesheet" href="style/loadFirst.css">
+        <link rel="stylesheet" href="style/animations.css">
+        <link rel="stylesheet" href="style/starfield.css">
+        <link rel="stylesheet" href="style/menu.css">
+        <link rel="stylesheet" href="style/battlefield.css">
+        <script type="text/javascript" src="script/systemNames.js"></script>
     </head>
     <body>
         <rigel-game>
-            <rigel-global-settings ship-path-width="20px">
+            <rigel-global-settings ship-path-width="20px" starfield-margin="20" starfield-edge="5px 5px" grid-spacing="10">
                 <rigel-technologies>
                     <tech-category name="shields">
                         <tech tech-level="1" name="Deflector Shield Mk1" shield defense-bonus="1"></tech>
@@ -214,22 +218,35 @@
                         <tech tech-level="50" name="Neutronium Armor"><sub-tech name="Neutronium" armour-plating cost="120 600 3000 15000" space="12 60 300 1500" armour-base="400" ground-combat-material="30"></sub-tech><sub-tech name="Neutronium 2" armour-plating cost="180 900 4500 25000" space="50 175 875 4375" armour-base="600"></sub-tech></tech>
                      </tech-category>
                 </rigel-technologies>
+                <rigel-species>
+                    <species name="humans"></species>
+                    <species name="robobots"></species>
+                    <species name="cats"></species>
+                </rigel-species>
             </rigel-global-settings>
             <rigel-races>
                 <race raceID="0" raceName="guardian">
                     <ship-spec shipID="0" name="Guardian" size="behemoth" shape="guardian" computer="10" shield="10" ecm="10" armour="10" engine="10" manoeuvre="4" weapons="0 0 0" specials="0 0"></ship-spec>
                 </race>
                 <race raceID="1" raceName="human" class="player">
+                    <tech-tree>
+                        <research-category name="shields" technologies="0 1 3 4 5 7 9" unlocked="0" researching="1" progress="135"></research-category>
+                        <research-category name="weapons" technologies="0 1 3 4 5 7 9" unlocked="0 1" researching="1" progress="135"></research-category>
+                        <research-category name="propulsion" technologies="0 1 3 4 5 7 9" unlocked="0 3" researching="1" progress="135"></research-category>
+                        <research-category name="ecology" technologies="0 1 3 4 5 7 9" unlocked="0" researching="1" progress="135"></research-category>
+                        <research-category name="computers" technologies="0 1 3 4 5 7 9" unlocked="0 5" researching="1" progress="135"></research-category>
+                        <research-category name="construction" technologies="0 1 3 4 5 7 9" unlocked="0" researching="1" progress="135"></research-category>
+                    </tech-tree>
                     <ship-spec shipID="0" name="Colony Ship" size="cruiser" shape="shape1" computer="0" shield="0" ecm="0" armour="0" engine="1" manoeuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
                     <ship-spec shipID="1" name="TechnoSploder" size="cruiser" shape="shape2" computer="0" shield="0" ecm="0" armour="0" engine="1" manoeuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
                     <ship-spec shipID="2" name="Exploderiser" size="cruiser" shape="shape3" computer="0" shield="0" ecm="0" armour="0" engine="1" manoeuvre="1" weapons="0 0 0" specials="0 0"></ship-spec>
                 </race>
             </rigel-races>
             <rigel-fleets>
-                <fleet fleetID="0" owner="guardian"><ship type="0" count="1"></ship></fleet>
-                <fleet fleetID="1" owner="humans"><ship type="0" count="20"></ship></fleet>
+                <fleet fleetID="0" owner="guardian"><ship shipID="0" count="1"></ship></fleet>
+                <fleet fleetID="1" owner="humans"><ship shipID="0" count="20"></ship></fleet>
             </rigel-fleets>
-            <rigel-starfield style="left: -20rem; top: -20rem; width: 160rem; height: 160rem;">
+            <rigel-starfield margin="20" edge="5px 5px" style="left: -20rem; top: -20rem; width: 160rem; height: 160rem;">
                 <rigel-starsystem name="Axólotl" x="9" y="10" fleetid="none" classification="blue" habitability="Desert" max-population="95" population="0" resource-level="Normal" missile-bases="0" production="100" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" owner="none" ship-production="0" ship-focus="0" style="left: 110rem; top: 120rem;"></rigel-starsystem>
                 <rigel-starsystem name="Asellus Tertius" x="5" y="10" fleetid="none" classification="red" habitability="Barren" max-population="50" population="0" resource-level="Normal" missile-bases="0" production="100" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" owner="none" ship-production="0" ship-focus="0" style="left: 70rem; top: 120rem;"></rigel-starsystem>
                 <rigel-starsystem name="Kornephoros" x="5" y="5" fleetid="none" classification="blue" habitability="Steppe" max-population="95" population="0" resource-level="Normal" missile-bases="0" production="100" production-locks="0 0 0 0 0" production-levels="20 20 20 20 20" owner="none" ship-production="0" ship-focus="0" style="left: 70rem; top: 70rem;"></rigel-starsystem>
@@ -275,21 +292,38 @@
                         <div class="ecology"><label><icon class="unlocked"></icon>Eco.</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
                         <div class="technology"><label><icon class="unlocked"></icon>Tech</label><input type="range" min="0" max="100" value="20" step="5"><label class="output">3 years</label></div>
                     </div>
-                
-                    </div>
-                    <div class="planet-actions">
-                        <ship-selection index="0" count="0" shipsPerDay="0.1">
-                            <ship-carousel focus="0">
-                                
-                            </ship-carousel>
-                        </ship-selection>
-                        <div class="buttons">
-                            <button class="ship-design">Ships</button>
-                            <button class="relocation">Relocate</button>
-                            <button class="transport">Transport</button>
-                        </div>
+                </div>
+                <div class="planet-actions">
+                    <ship-selection index="0" count="0" shipsPerDay="0.1">
+                        <ship-carousel focus="0">
+                            
+                        </ship-carousel>
+                    </ship-selection>
+                    <div class="buttons">
+                        <button class="ship-design">Ships</button>
+                        <button class="relocation">Relocate</button>
+                        <button class="transport">Transport</button>
                     </div>
                 </div>
+            </div>
+            <ship-design-screen class="hidden">
+
+            </ship-design-screen>
+            <rigel-fleet-menu class="hidden">
+
+            </rigel-fleet-menu>
+            <rigel-map-screen class="hidden">
+
+            </rigel-map-screen>
+            <rigel-races-screen class="hidden">
+
+            </rigel-races-screen>
+            <rigel-planet-screen class="hidden">
+
+            </rigel-planet-screen>
+            <rigel-tech-screen class="hidden">
+
+            </rigel-tech-screen>
             <button-bar>
                 <input type="button" class="menu-button" value="Menu">
                 <input type="button" class="design-button" value="Design">
@@ -300,10 +334,10 @@
                 <input type="button" class="tech-button" value="Tech">
                 <input type="button" class="next-turn-button" value="Next Turn">
             </button-bar>
-            <rigel-battlefield planet-name="Test1" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
-                <ship-display class="right" x="0" y="0" owner="human" type="0" health="10" max-health="10" size="behemoth" shape="guardian" count="10"></ship-display>
+            <rigel-battlefield planet-name="Rigel" grid-width="10" grid-height="7" defending-fleet="0" attacking-fleet="1">
+                <ship-display class="right" x="0" y="0" owner="human" shipID="0" damage="0 " max-health="10" size="behemoth" shape="guardian" count="10"></ship-display>
             </rigel-battlefield>
-            <rigel-menu class="pause-menu hidden">
+            <rigel-menu class="pause hidden">
                 <input type="button" value="Continue"></input>
                 <input type="button" value="New Game"></input>
                 <input type="button" value="Save Game"></input>
@@ -326,4 +360,5 @@
             </rigel-menu>
         </rigel-game>
     </body>
+    <script type="text/javascript" src="script/gameLogic.js"></script>
 </html>

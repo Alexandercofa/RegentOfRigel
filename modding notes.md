@@ -223,7 +223,7 @@ The number of times a weapon is fired per use.
 If this attribute is missing from a weapon then it's value is treated as "1".
 
 #### `split-into-missiles="<number>"`
-The number of missiles each launcher of this missile fires at once. Always consumes 1 ammo, regardless of the number of missiles are actually fired.
+The number of missiles each launcher of this missile fires at once. Always consumes 1 ammo, regardless of the number of missiles that are actually fired.
 
 If this attribute is missing from a missile then it's value is treated as "1".
 
@@ -243,7 +243,7 @@ The chance of dodging any attacks, as a percentage. This is separate from the no
 The ship with this tech equiped can colonise any system with an environment equal to or better than the given habitat. This will destroy the ship.
 
 #### `regen-health-percent="<number>"`
-The ship with this tech equipped will regain a percentage of it's max health equal to the value of this attribute.
+The ship with this tech equipped will regain a percentage of it's max health equal to the value of this attribute at the start of each turn.
 
 #### `apply-regen-only-to-first-ship-in-stack`
 This attribute changes the behaviour of the `regen-health-percent` attribute, so that it applies to only the first ship in a stack, to conform with behaviour in Master of Orion.
@@ -257,25 +257,13 @@ Usually, a weapon will only ever damage the first ship in a stack, even if it de
 #### `repulsor-beam-effect="<number>"`
 Pushes back enemy ships that move within the effective area of the repulsor beam. The effective area is a circle with a radius equal to the value of the `repulsor-beam-effect` attribute, centred on the space ship.
 
-Ships that teleport or decloak next to the ship with this equipped will not trigger the repulsor beam.
+Ships that teleport, move into the effective area while under cloak, or decloak next to the ship with this equipped will not trigger the repulsor beam.
 
 #### `anti-missile-percent="<number>"`
 The chance of this tech destroying missiles that would otherwise hit the ship. The value is reduced by 1% for each level of the missile.
 
-#### `armour-small="<number>"`
-Should only be defined once in a tech tree, on the initial armour tech. All health increases should be handled with the `armour-mult` attribute.
-
-#### `armour-medium="<number>"`
-Should only be defined once in a tech tree, on the initial armour tech. All health increases should be handled with the `armour-mult` attribute.
-
-#### `armour-large="<number>"`
-Should only be defined once in a tech tree, on the initial armour tech. All health increases should be handled with the `armour-mult` attribute.
-
-#### `armour-massive="<number>"`
-Should only be defined once in a tech tree, on the initial armour tech. All health increases should be handled with the `armour-mult` attribute.
-
-#### `armour-mult="<number>"`
-When equipped, multiplies the base armour by this value.
+#### `armour-base`
+The amount of hit points a cruiser class ship has. Behemoths will get six times as many hit points, 
 
 #### `reduce-enemy-attack-min="<number>"`
 Reduces the target's attack by at least this much.
@@ -289,7 +277,7 @@ When this special or weapon is triggered, cloaks or decloaks the ship. A cloaked
 #### `teleporter`
 If the `teleporter` attribute is set on an item then the ship it's equipped to can instantaniously move to any spot on the battlefield instead of normal movement. Also, a ship that has an active teleporter fires first, regardless of initiative.
 
-Blocked by the global tech attribute `block-teleporter` on any tech researched by the system owner when orbitting their system.
+Blocked by the global tech attribute `block-teleporter` on any tech researched by the system owner when orbitting their system, so long as they have at least 1 missile base.
 
 #### `scan`
 Allows ships to scan ships. Automatically equipped to missile bases.
@@ -319,7 +307,11 @@ This value is added to your soldiers' ground attack value during ground combat.
 
 #### `planetary-shield="<number>"`
 TODO: confirm order that planetary shields are built in.
-Planets will try and build the technology with the highest `planetary-shield` value using their planetary defense spending. The `cost` attribute of this technology will refer to the cost that the planet must pay to develop the tech.
+
+Planets will try and build the technology with the highest `planetary-shield` value using their planetary defense spending. The `cost` attribute of this technology will refer to the cost that the planet must pay to develop the shield.
+
+TODO: check whether previous shields reduce the cost of later ones.
+
 
 #### `max-travel-distance="<number>"`
 The value of this attribute defines the maximum distance that ships can travel from their systems on the world map.
@@ -368,15 +360,19 @@ How far from your colonies you detect other ships.
 How far from your ship you detect other ships.
 
 #### `detect-ship-destination`
+Displays the destination of detected ships.
 
 #### `detect-ship-ETA`
+displays the ETA of detected ships
 
 #### `communicate-with-fleets-in-transit`
+Allows communication with fleets in transit.
 
 #### `give-piercing-to-weapon-type="[<weapon type>]"`
 Gives piercing to all equipped weapons of given types.
 
 #### `armour-missile-base="<number>"`
+
 
 #### `factory-cost="<number>"`
 Cost of building a new factory on your planets.
