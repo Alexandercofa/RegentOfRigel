@@ -526,15 +526,17 @@ const Starfield = Object.freeze({
         starfield.style.left = -starfieldMargin + 'rem';
         starfield.style.top = -starfieldMargin + 'rem';
     },
-    togglePlanetDetails()
+    getPlanetDetails(ancestor = Global.game)
     {
-        const planetDetails = document.querySelector(".planet-details");
+        return ancestor.querySelector(".planet-details");
+    },
+    togglePlanetDetails(e, planetDetails = Starfield.getPlanetDetails())
+    {
         planetDetails.classList.toggle("hidden");
         planetDetails.querySelector(".toggle-details").classList.toggle("left-chevron");
     },
     move(event)
     {
-        //TODO: fix this
         const game = Global.game;
         const starfield = Starfield.getStarfield();
         const button_bar = ButtonBar.getButtonBar();
@@ -556,32 +558,83 @@ const Starfield = Object.freeze({
         starfield.style.left = offsetLeft;
         starfield.style.top  = offsetTop;
     },
+    mouseDown(e) 
+    {
+        Starfield.setOffset(starfield, e);
+        window.addEventListener('mousemove', Starfield.move, true);
+    },
+    mouseUp(e) 
+    {
+        window.removeEventListener('mousemove', Starfield.move, true);
+    },
+    displayPlanetDetails(starsystem, planetDetails = Starfield.getPlanetDetails())
+    {
+        //TODO: fix me!
+        if(selectedSystem != null) {
+            const planetDetailsPanel = document.querySelector(".planet-details");
+            const name = planetDetailsPanel.querySelector(".planet-name");
+            const [image, habitability, resources, max_pop] = planetDetailsPanel.querySelectorAll(".planet-summary>*");
+            const [population, bases, production] = planetDetailsPanel.querySelectorAll(".planet-resources>*");
+            const allProduction = planetDetailsPanel.querySelectorAll(".production>div");
+            name.innerHTML = selectedSystem.getAttribute("name");
+            console.log(population, bases, production);
+            //TODO: set star icon colour.
+            //TODO: select planet image.
+    
+            habitability.querySelector(".habitability").innerHTML = selectedSystem.getAttribute("habitability");
+            resources.querySelector(".resource-level").innerHTML = selectedSystem.getAttribute("resource-level");
+            max_pop.querySelector(".max-population").innerHTML = selectedSystem.getAttribute("max-population");
+    
+            population.querySelector(".population-value").innerHTML = selectedSystem.getAttribute("population");
+            bases.querySelector(".missile-bases-value").innerHTML = selectedSystem.getAttribute("missile-bases");
+            //TODO: calculate effective production.
+            production.querySelector(".production-effective-value").innerHTML = selectedSystem.getAttribute("production");
+            production.querySelector(".production-true-value").innerHTML = selectedSystem.getAttribute("production");
+    
+            //production locks and production levels
+            let productionLocks = selectedSystem.getAttribute("production-locks").split(" ").map((lock) => {return lock != "0"});
+    
+            balanceSystemProduction()
+            let productionLevels = selectedSystem.getAttribute("production-levels").split(" ").map((prod) => {return parseFloat(prod)});
+            //TODO: set the 'per year' values.
+            for (let i = 0; i < allProduction.length; i++) {
+                const element = allProduction[i];
+                if (productionLocks[i]) {
+                    const icon = element.querySelector("icon");
+                    icon.classList.add("locked");
+                    icon.classList.remove("unlocked");
+                    element.querySelector("input").setAttribute("disabled", "");
+                } else {
+                    const icon = element.querySelector("icon");
+                    icon.classList.add("unlocked");
+                    icon.classList.remove("locked");
+                    element.querySelector("input").removeAttribute("disabled");
+                }
+                const input = element.querySelector("input");
+                //input.value changes the displayed value, setting the attribute value keeps the html up-to-date with the displayed value.
+                input.value = productionLevels[i];
+                input.setAttribute("value", productionLevels[i]);
+            }
+            populateShipCarousel();
+            setShipProductions(selectedSystem);
+            setSelectedShip(parseFloat(selectedSystem.getAttribute("ship-focus")))
+        }
+    },
     addListeners(starfield)
     {
         // TODO: finish modifying this function. 
         // TODO: Move the listener functions into named functions.
         // Starsystem.displayDetails()
-        starfield.addEventListener('mousedown', e => {
-            Starfield.setOffset(starfield, e);
-            window.addEventListener('mousemove', Starfield.move, true);
-        });
+        starfield.addEventListener('mousedown', Starfield.mouseDown);
+        window.addEventListener('mouseup', Starfield.mouseUp, false);
+
+        const planetDetails = Starfield.getPlanetDetails();
+        planetDetails.querySelector(".toggle-details").addEventListener("click", Starfield.togglePlanetDetails, true);
         
-        window.addEventListener('mouseup', (e) => {
-            window.removeEventListener('mousemove', Starfield.move, true);
-        }, false);
-        // const starsystems = starfield.querySelectorAll("rigel-starsystem");
-        // for (const starsystem of starsystems) {
-        //     starsystem.addEventListener('click', (e) => {
-        //         if(starsystem.classList.contains('selected')) {
-        //             // starsystem.classList.remove('selected');
-        //         } else {
-        //             starfield.querySelectorAll("rigel-starsystem.selected").forEach((element) => element.classList.remove('selected'));
-        //             starsystem.classList.add('selected');
-        //             selectedSystem = starsystem;
-        //         }
-        //         displayPlanetDetails();
-        //     });
-        // }
+        const starsystems = Starsystem.getSystems();
+        for (const starsystem of starsystems) {
+            Starsystem.addListeners(starsystem);
+        }
 
         // // details panel listeners
         // const planetDetailsPanel = document.querySelector(".planet-details");
@@ -747,6 +800,21 @@ const Starsystem = Object.freeze({
     getSelectedStar(ancestor = Global.game)
     {
         return ancestor.querySelector("rigel-starfield rigel-starsystem.selected")
+    },
+    onClick(e, starfield = Starfield.getStarfield()) {
+        const starsystem = e.target;
+        if(starsystem.classList.contains('selected')) {
+            // starsystem.classList.remove('selected');
+        } else {
+            starfield.querySelectorAll("rigel-starsystem.selected").forEach((element) => element.classList.remove('selected'));
+            starsystem.classList.add('selected');
+            selectedSystem = starsystem;
+        }
+        Starfield.displayPlanetDetails(starsystem);
+    },
+    addListeners(starsystem)
+    {
+        starsystem.addEventListener('click', Starsystem.onClick);
     }
 });
 
